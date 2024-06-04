@@ -7,7 +7,7 @@ export async function DeleteSection(state: any, formData: FormData) {
   const data = { id };
 
   const token = "Bearer uKkBUm36l8U=w2C_v!@";
-  const url = `${process.env.URL}/api/sections`;
+  const url = `${process.env.NEXT_PUBLIC_URL_API}/api/sections`;
   const response = await fetch(url, {
     headers: {
       Authorization: token,

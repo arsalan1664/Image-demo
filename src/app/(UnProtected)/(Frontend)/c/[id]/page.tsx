@@ -29,7 +29,7 @@ export default async function Category({ params }: { params: { id: string } }) {
           alt="3D Renders"
           className="w-full"
           height="500"
-          src={imageUrl}
+          src={process.env.NEXT_PUBLIC_URL + imageUrl}
           style={{
             aspectRatio: "1366/500",
             objectFit: "cover",

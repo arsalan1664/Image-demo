@@ -39,14 +39,10 @@ function Animated_Search() {
         <div className="relative group">
           <div className="absolute -inset-2 bg-gradient-to-r from-pink-600 to-purple-600 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
           <div className="relative px-4 bg-zinc-950 rounded-full leading-none flex items-center md:min-w-96">
-            {/* <input
-              onChange={(e) => setValue(e.target.value)}
-              className="border-none outline-none text-gray-300 group-hover:text-gray-100 transition duration-200  max-w-80 h-full p-4  bg-transparent"
-            ></input> */}
-
             <Command className="bg-zinc-950 text-white/40 ">
               <CommandInput
                 inputMode="search"
+                value={value}
                 onValueChange={(search: string) => setValue(search)}
                 placeholder="Type a command or search..."
               />
@@ -59,7 +55,7 @@ function Animated_Search() {
               <Loader2 className="animate-spin text-white/40  ml-auto" />
             ) : (
               <Button onClick={handleSubmit} size={"icon"} variant={"ghost"}>
-                <ArrowBigRight className="animate- text-white/40 " />
+                <ArrowBigRight className=" text-white/40 " />
               </Button>
             )}
           </div>

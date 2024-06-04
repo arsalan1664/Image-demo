@@ -1,5 +1,5 @@
-import React, { Suspense } from "react";
-import { db } from "@/lib/db";
+import React from "react";
+
 import Modal from "../../_component/Modal";
 
 async function page({ params }: { params: { id: string } }) {

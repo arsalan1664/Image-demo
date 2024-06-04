@@ -37,7 +37,7 @@ export async function CategoryTable() {
                 <Image
                   width={80}
                   height={40}
-                  src={item.imageUrl}
+                  src={process.env.NEXT_PUBLIC_URL + item.imageUrl}
                   alt="cover image"
                   className="drop-shadow-lg"
                 />

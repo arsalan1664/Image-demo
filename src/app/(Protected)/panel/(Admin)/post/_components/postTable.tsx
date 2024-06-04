@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 
-import { ChevronDown, ChevronDownIcon } from "lucide-react";
+import { ChevronDownIcon } from "lucide-react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -16,7 +16,6 @@ import {
 } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -35,7 +34,7 @@ import {
 
 import { AddButton } from "./add-button";
 import { ActionButton } from "./action-button";
-import React, { useEffect } from "react";
+import React from "react";
 import { Badge } from "@/components/ui/badge";
 
 export type Type = {
@@ -81,16 +80,20 @@ export const columns: ColumnDef<Type>[] = [
   {
     accessorKey: "imageUrl",
     header: "Image",
-    cell: ({ row }) => (
-      <Image
-        id="image"
-        width={80}
-        height={40}
-        src={row.getValue("imageUrl")}
-        alt="cover image"
-        className="drop-shadow-lg "
-      />
-    ),
+    cell: ({ row }) => {
+      return (
+        <>
+          <Image
+            id="image"
+            width={80}
+            height={40}
+            src={process.env.NEXT_PUBLIC_URL + "" + row.getValue("imageUrl")}
+            alt="cover image"
+            className="drop-shadow-lg "
+          />
+        </>
+      );
+    },
   },
   {
     accessorKey: "title",
@@ -112,7 +115,7 @@ export const columns: ColumnDef<Type>[] = [
     cell: ({ row }) => {
       return (
         <div className="capitalize">
-          <Badge>{row.original.category.title || "--"}</Badge>
+          <Badge>{row.original.category?.title || "--"}</Badge>
         </div>
       );
     },

@@ -9,7 +9,7 @@ export async function DeleteTag(state: any, formData: FormData) {
   }
   const data = { id };
   const token = "Bearer uKkBUm36l8U=w2C_v!@";
-  const url = `${process.env.URL}/api/tags`;
+  const url = `${process.env.NEXT_PUBLIC_URL_API}/api/tags`;
   const response = await fetch(url, {
     headers: {
       Authorization: token,

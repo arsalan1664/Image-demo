@@ -39,7 +39,7 @@ export function Categories({ data }: { data: any }) {
                     alt="Backgrounds"
                     className="w-full h-full object-center object-cover"
                     height="256"
-                    src={item.imageUrl}
+                    src={process.env.NEXT_PUBLIC_URL + item.imageUrl}
                     style={{
                       aspectRatio: "384/256",
                       objectFit: "cover",

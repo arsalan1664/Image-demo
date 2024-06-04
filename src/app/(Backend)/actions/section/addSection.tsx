@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 
 export async function AddSection(state: any, formData: FormData) {
   const token = "Bearer uKkBUm36l8U=w2C_v!@";
-  const url = `${process.env.URL}/api/sections`;
+  const url = `${process.env.NEXT_PUBLIC_URL_API}/api/sections`;
   const response = await fetch(encodeURI(url), {
     headers: {
       Authorization: token,

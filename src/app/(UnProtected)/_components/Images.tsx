@@ -1,14 +1,12 @@
 "use client";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Loader2Icon } from "lucide-react";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { Suspense } from "react";
-import { TabCarousel } from "./TabCarousel";
+import React, { Suspense, useEffect, useState } from "react";
 
 function Images({ images }: { images: any }) {
   const router = useRouter();
+  const imagesrc = "";
+
   return (
     <div className="p-5 md:p-10 lg:max-w-screen-2xl mx-auto">
       <div className="columns-1 gap-5 sm:columns-2 lg:columns-3 lg:gap-5  space-y-5 xl:columns-4 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-8">
@@ -40,7 +38,7 @@ function Images({ images }: { images: any }) {
                 height={500}
                 alt="Image"
                 className="object-cover w-full  group-hover:scale-110 transition duration-300 ease-in-out"
-                src={item.imageUrl}
+                src={process.env.NEXT_PUBLIC_URL + item.imageUrl}
               />
             </div>
           )
@@ -52,6 +50,9 @@ function Images({ images }: { images: any }) {
 
 export default Images;
 
+function elseif(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
 // function Images({ images }: { images: any }) {
 //   return (
 //     <div className="p-5 md:p-10">
