@@ -2,6 +2,9 @@ import React from "react";
 import Navbar from "../_components/Navbar";
 import Footer2 from "../_components/Footer2";
 
+
+
+
 function layout({
   children,
   modal,

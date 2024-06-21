@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import React from "react";
+import React, { Suspense } from "react";
 import Header from "../../_components/Header";
 import { BarChart } from "lucide-react";
 import EaseIn from "@/lib/ease_In";
@@ -55,13 +55,17 @@ async function Dashboard() {
               <Card key={item.id} className={`p-0 ${item.color}`}>
                 <CardContent className="p-0">
                   <div className="grid gap-2 p-4">
-                    <h2 className="font-semibold text-foreground dark:text-background text-lg">
-                      {item.title}
-                    </h2>
-                    <p className="text-3xl text-foreground dark:text-background flex justify-between items-center ">
-                      {item.number}
-                      <BarChart className="h-8 w-8 mr-2" />
-                    </p>
+                    <Suspense fallback={<>Loading</>}>
+                      <h2 className="font-semibold text-foreground dark:text-background text-lg">
+                        {item.title}
+                      </h2>
+                    </Suspense>
+                    <Suspense fallback={<>Loading</>}>
+                      <p className="text-3xl text-foreground dark:text-background flex justify-between items-center ">
+                        {item.number}
+                        <BarChart className="h-8 w-8 mr-2" />
+                      </p>
+                    </Suspense>
                   </div>
                 </CardContent>
               </Card>

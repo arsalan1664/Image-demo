@@ -5,12 +5,32 @@ import { Input } from "@/components/ui/input";
 import { db } from "@/lib/db";
 import BackButton from "./BackButton";
 import Image from "next/image";
+import { Metadata, ResolvingMetadata } from "next";
 
-export async function generateStaticParams() {
-  const Posts = await db.posts.findMany();
-  return Posts?.map((item: any) => ({
-    id: item.id,
-  }));
+// export async function generateStaticParams() {
+//   const Posts = await db.posts.findMany();
+//   return Posts?.map((item: any) => ({
+//     id: item.id,
+//   }));
+// }
+
+export async function generateMetadata(
+  { params }: { params: { id: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const id = params.id;
+
+  const post = await db.posts.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  return {
+    title: post?.title,
+    description: post?.description,
+  };
 }
 
 async function Page({ params }: { params: any }) {

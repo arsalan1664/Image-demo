@@ -1,12 +1,32 @@
 import { db } from "@/lib/db";
 import Images from "../../../_components/Images";
 import Image from "next/image";
+import { Metadata, ResolvingMetadata } from "next";
 
-export async function generateStaticParams() {
-  const categories = await db.categories.findMany();
-  return categories?.map((item: any) => ({
-    id: item.id,
-  }));
+// export async function generateStaticParams() {
+//   const categories = await db.categories.findMany();
+//   return categories?.map((item: any) => ({
+//     id: item.id,
+//   }));
+// }
+
+export async function generateMetadata(
+  { params }: { params: { id: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const id = params.id;
+
+  const categories = await db.categories.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  return {
+    title: categories?.metaTitle,
+    description: categories?.metaDescription,
+  };
 }
 
 export default async function Category({ params }: { params: { id: string } }) {

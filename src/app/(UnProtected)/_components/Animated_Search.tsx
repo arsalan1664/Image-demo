@@ -2,23 +2,13 @@
 
 import {
   Command,
-  CommandEmpty,
-  CommandGroup,
   CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
 } from "@/components/ui/command";
 import {
-  ArrowBigLeft,
   ArrowBigRight,
-  Calculator,
-  Calendar,
   Loader2,
-  Smile,
-  Tag,
 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SearchDropDown from "./SearchDropDown";
 import { useDebounce } from "use-debounce";
 import { Button } from "@/components/ui/button";

@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
+import { v4 as uuidv4 } from "uuid";
 
 ////////////////////////////////////////////
 /////////////// formData //////////////////
@@ -33,15 +34,13 @@ export async function POST(request: NextRequest) {
   const tag = formData.get("tag") as string;
   const tagArry = tag.split(",");
   const image = formData.get("image") as any;
-  const section = formData.get("section") as any; // Use Next.js built-in formData()
+  const section = formData.get("section") as any;
 
-  const imageName = `${Date.now()}-${image.name}`; // Unique filename
+  const imageName = `${Date.now()}-${image.name}`;
   try {
-    // Create the 'posts' directory if it doesn't exist
     const dirPath = `public/uploads/posts/`;
     await fs.mkdir(dirPath, { recursive: true });
 
-    // Save the image to the 'posts' directory
     await fs.writeFile(`${dirPath}${imageName}`, image.stream());
   } catch (error) {
     console.error(error);
@@ -50,9 +49,17 @@ export async function POST(request: NextRequest) {
       { status: 400 }
     );
   }
-  // // Create the post (replace with your database interaction logic)
+
+  function generateId(title: string) {
+    const formattedTitle = title.replace(/\s+/g, "-");
+    const uuid = uuidv4();
+    return `${formattedTitle}-${uuid.substring(0, 8)}`;
+  }
+
+  const id = generateId(title);
   const post = await db.posts.create({
     data: {
+      id,
       title,
       description,
       category: { connect: { id: categoryId } },

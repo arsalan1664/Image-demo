@@ -1,7 +1,9 @@
+import { GetNavLink } from "@/app/(Backend)/actions/navlink/getNavlink";
 import { ThemeToggle } from "@/components/ui/themeToggle";
 import Link from "next/link";
 
-const Navbar = () => {
+const Navbar = async () => {
+  const navlinks = await GetNavLink();
   return (
     <div className="w-full h-14 fixed top-0 z-50 px-10 border-b border-border/40 bg-background/95 backdrop-blur-sm supports-[backdrop-filter]:bg-background/60">
       <div className="w-full h-full flex flex-row items-center justify-between m-auto px-[10px]">
@@ -18,7 +20,15 @@ const Navbar = () => {
             {process.env.WEBSITE_NAME}
           </span>
         </Link>
-        <ThemeToggle />
+        <div className="hidden md:flex items-center gap-5 text-muted-foreground text-sm">
+          {navlinks?.map((item, i) => (
+            <Link key={i} href={item.link}>
+              {item.title}
+            </Link>
+          ))}
+
+          <ThemeToggle />
+        </div>
       </div>
     </div>
   );

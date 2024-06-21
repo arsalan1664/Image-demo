@@ -1,6 +1,5 @@
 "use client";
 import { loginAction } from "@/app/(Backend)/actions/auth/loginAction";
-import { registerAction } from "@/app/(Backend)/actions/auth/registerAction";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,9 +14,7 @@ import { Label } from "@/components/ui/label";
 import EaseIn from "@/lib/ease_In";
 import { AlertCircle, Loader2 } from "lucide-react";
 import Link from "next/link";
-
-import { redirect, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { redirect } from "next/navigation";
 import { useFormState, useFormStatus } from "react-dom";
 
 export default function Login() {

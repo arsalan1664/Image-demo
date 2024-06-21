@@ -13,7 +13,6 @@ function validateBearerToken(request: NextRequest) {
 
   const bearerToken = authorizationHeader.substring(7); // Remove "Bearer " prefix
 
-  // TODO: Implement token validation logic, for example, using a JWT library or checking against a database.
 
   // Example of a simple check
   if (bearerToken !== "uKkBUm36l8U=w2C_v!@") {

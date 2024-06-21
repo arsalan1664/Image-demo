@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 
 function Footer2() {
@@ -15,10 +14,7 @@ function Footer2() {
               alt="logo"
             /> */}
             <h4>{process.env.WEBSITE_NAME}</h4>
-            <p className="max-w-xs mt-4 text-sm text-gray-600">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-              accusantium.
-            </p>
+
             <div className="flex mt-8 space-x-6 text-gray-600">
               <a className="hover:opacity-75" target="_blank" rel="noreferrer">
                 <span className="sr-only"> Facebook </span>
@@ -95,7 +91,7 @@ function Footer2() {
           </div>
           <div className="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-2 lg:grid-cols-4">
             <div>
-              <p className="font-medium">Company</p>
+              <p className="font-medium">Most Popular</p>
               <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
                 <a className="hover:opacity-75"> About </a>
                 <a className="hover:opacity-75"> Meet the Team </a>
@@ -104,7 +100,7 @@ function Footer2() {
               </nav>
             </div>
             <div>
-              <p className="font-medium">Services</p>
+              <p className="font-medium">Category</p>
               <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
                 <a className="hover:opacity-75"> 1on1 Coaching </a>
                 <a className="hover:opacity-75"> Company Review </a>

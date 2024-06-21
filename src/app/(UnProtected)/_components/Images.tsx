@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { Suspense, useEffect, useState } from "react";
+import React from "react";
 
 function Images({ images }: { images: any }) {
   const router = useRouter();
@@ -37,7 +37,7 @@ function Images({ images }: { images: any }) {
                 width={500}
                 height={500}
                 alt="Image"
-                className="object-cover w-full  group-hover:scale-110 transition duration-300 ease-in-out"
+                className="object-cover w-full  group-hover:scale-110 group-hover:brightness-50 transition duration-300 ease-in-out"
                 src={process.env.NEXT_PUBLIC_URL + item.imageUrl}
               />
             </div>

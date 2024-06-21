@@ -16,8 +16,8 @@ const sidebarNavItems = [
     href: "/panel/setting",
   },
   {
-    title: "Appearance",
-    href: "/panel/setting/appearance",
+    title: "Navlink",
+    href: "/panel/setting/navlink",
   },
 ];
 

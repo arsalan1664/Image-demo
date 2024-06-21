@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
+import { v4 as uuidv4 } from "uuid";
 
 export async function GET(request: NextRequest) {
   try {
@@ -176,9 +177,17 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // // Create the category (replace with your database interaction logic)
+  function generateId(title: string) {
+    const formattedTitle = title.replace(/\s+/g, "-");
+    const uuid = uuidv4();
+    return `${formattedTitle}-${uuid.substring(0, 8)}`;
+  }
+
+  const id = generateId(title);
+
   const category = await db.categories.create({
     data: {
+      id,
       title,
       metaTitle,
       description,
