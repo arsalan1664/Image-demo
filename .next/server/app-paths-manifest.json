@@ -1,0 +1,23 @@
+{
+  "/_not-found": "app/_not-found.js",
+  "/(Backend)/api/auth/[...nextauth]/route": "app/(Backend)/api/auth/[...nextauth]/route.js",
+  "/(Backend)/api/categories/route": "app/(Backend)/api/categories/route.js",
+  "/(Backend)/api/posts/route": "app/(Backend)/api/posts/route.js",
+  "/(Backend)/api/sections/route": "app/(Backend)/api/sections/route.js",
+  "/(Backend)/api/tags/route": "app/(Backend)/api/tags/route.js",
+  "/(UnProtected)/(Frontend)/@modal/(.)photos/[id]/page": "app/(UnProtected)/(Frontend)/@modal/(.)photos/[id]/page.js",
+  "/(UnProtected)/(Frontend)/@modal/default": "app/(UnProtected)/(Frontend)/@modal/default.js",
+  "/(UnProtected)/(Frontend)/search/page": "app/(UnProtected)/(Frontend)/search/page.js",
+  "/(UnProtected)/login/page": "app/(UnProtected)/login/page.js",
+  "/(Protected)/panel/(Admin)/post/page": "app/(Protected)/panel/(Admin)/post/page.js",
+  "/(Protected)/panel/(Admin)/tags/page": "app/(Protected)/panel/(Admin)/tags/page.js",
+  "/(Protected)/panel/(Admin)/categories/page": "app/(Protected)/panel/(Admin)/categories/page.js",
+  "/(Protected)/panel/(Admin)/page": "app/(Protected)/panel/(Admin)/page.js",
+  "/(UnProtected)/(Frontend)/c/[id]/page": "app/(UnProtected)/(Frontend)/c/[id]/page.js",
+  "/(UnProtected)/(Frontend)/explore/page": "app/(UnProtected)/(Frontend)/explore/page.js",
+  "/(UnProtected)/(Frontend)/page": "app/(UnProtected)/(Frontend)/page.js",
+  "/(UnProtected)/(Frontend)/photos/[id]/page": "app/(UnProtected)/(Frontend)/photos/[id]/page.js",
+  "/(Protected)/panel/(Admin)/sections/page": "app/(Protected)/panel/(Admin)/sections/page.js",
+  "/(Protected)/panel/(AdminSetting)/setting/navlink/page": "app/(Protected)/panel/(AdminSetting)/setting/navlink/page.js",
+  "/(Protected)/panel/(AdminSetting)/setting/page": "app/(Protected)/panel/(AdminSetting)/setting/page.js"
+}
