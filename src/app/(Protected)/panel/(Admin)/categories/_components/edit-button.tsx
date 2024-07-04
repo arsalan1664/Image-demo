@@ -15,7 +15,7 @@ import { useFormState } from "react-dom";
 import { EditSection } from "@/app/(Backend)/actions/section/editSection";
 import { useFormStatus } from "react-dom";
 import { Loader2, Pencil } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { GetSection } from "@/app/(Backend)/actions/section/getSection";
 import {
@@ -44,12 +44,14 @@ export function EditButton({
   section: string;
 }) {
   const [state, dispatch] = useFormState(EditCategory, null);
+  const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
     if (state?.error) {
       toast.error(`${state?.error}`);
     }
     if (state?.success) {
       toast.success(`${state?.success}`);
+      formRef?.current?.reset();
     }
     if (state?.info) {
       toast.info(`${state?.info}`);
@@ -70,7 +72,7 @@ export function EditButton({
             Edit category, Click save when you are done.
           </DialogDescription>
         </DialogHeader>
-        <form action={dispatch}>
+        <form ref={formRef} action={dispatch}>
           <div className="grid grid-cols-2 gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Input defaultValue={id} name="id" className="hidden" />

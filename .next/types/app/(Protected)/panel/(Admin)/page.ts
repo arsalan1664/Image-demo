@@ -1,4 +1,4 @@
-// File: /home/wn-061/Arsalan/Image-demo/src/app/(Protected)/panel/(Admin)/page.tsx
+// File: /home/wn-061/Arsalan/Image-demo-july3/src/app/(Protected)/panel/(Admin)/page.tsx
 import * as entry from '../../../../../../src/app/(Protected)/panel/(Admin)/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

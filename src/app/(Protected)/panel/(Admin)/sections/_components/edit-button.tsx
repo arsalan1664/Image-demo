@@ -16,7 +16,7 @@ import { EditSection } from "@/app/(Backend)/actions/section/editSection";
 import { useFormStatus } from "react-dom";
 import { Loader2, Pencil } from "lucide-react";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 
 export function EditButton({
@@ -29,12 +29,14 @@ export function EditButton({
   description: any;
 }) {
   const [state, dispatch] = useFormState(EditSection, null);
+  const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
     if (state?.error) {
       toast.error(`${state?.error}`);
     }
     if (state?.success) {
       toast.success(`${state?.success}`);
+      formRef.current?.reset();
     }
     if (state?.info) {
       toast.info(`${state?.info}`);
@@ -55,7 +57,7 @@ export function EditButton({
             Make changes to your section here. Click save when you are done.
           </DialogDescription>
         </DialogHeader>
-        <form action={dispatch}>
+        <form ref={formRef} action={dispatch}>
           <div className="grid gap-4 py-4">
             <div className="hidden ">
               <Label htmlFor="id" className="text-right">

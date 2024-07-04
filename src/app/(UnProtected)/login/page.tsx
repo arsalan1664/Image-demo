@@ -1,5 +1,6 @@
 "use client";
 import { loginAction } from "@/app/(Backend)/actions/auth/loginAction";
+import { registerAction } from "@/app/(Backend)/actions/auth/registerAction";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,6 +20,7 @@ import { useFormState, useFormStatus } from "react-dom";
 
 export default function Login() {
   const [state, dispatch] = useFormState(loginAction, null);
+  // const [state, dispatch] = useFormState(registerAction, null);
   if (state?.success) {
     redirect("/panel");
   }

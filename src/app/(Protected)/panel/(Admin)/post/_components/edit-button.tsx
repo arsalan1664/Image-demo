@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { useFormState } from "react-dom";
 import { useFormStatus } from "react-dom";
 import { Loader2, Pencil, Plus } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import {
   Select,
@@ -35,12 +35,14 @@ export function EditButton({ data }: { data: any }) {
   const [state, dispatch] = useFormState(EditPost, null);
   const [selectedTagIds, setSelectedTagIds] = useState<any[]>([]);
   const [items, setItems] = useState<any[]>([]);
+  const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
     if (state?.error) {
       toast.error(`${state?.error}`);
     }
     if (state?.success) {
       toast.success(`${state?.success}`);
+      formRef.current?.reset();
     }
     if (state?.info) {
       toast.info(`${state?.info}`);
@@ -81,7 +83,7 @@ export function EditButton({ data }: { data: any }) {
             Edit Post, Click save when you are done.
           </DialogDescription>
         </DialogHeader>
-        <form action={dispatch}>
+        <form ref={formRef} action={dispatch}>
           <div className="grid grid-cols-2 gap-4 py-4">
             <input name="id" defaultValue={data?.id} className="hidden" />
             <div className="grid grid-cols-4 items-center gap-4">

@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import {
   Select,
@@ -29,12 +29,14 @@ import { GetSection } from "@/app/(Backend)/actions/section/getSection";
 
 export function AddButton() {
   const [state, dispatch] = useFormState(AddCategory, null);
+  const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
     if (state?.error) {
       toast.error(`${state?.error}`);
     }
     if (state?.success) {
       toast.success(`${state?.success}`);
+      formRef.current?.reset();
     }
     if (state?.info) {
       toast.info(`${state?.info}`);
@@ -58,7 +60,7 @@ export function AddButton() {
             Add category, Click Add Category when you are done.
           </DialogDescription>
         </DialogHeader>
-        <form action={dispatch}>
+        <form ref={formRef} action={dispatch}>
           <div className="grid grid-cols-2 gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right">Title</Label>

@@ -1,4 +1,4 @@
-// File: /home/wn-061/Arsalan/Image-demo/src/app/(Backend)/api/tags/route.tsx
+// File: /home/wn-061/Arsalan/Image-demo-july3/src/app/(Backend)/api/tags/route.tsx
 import * as entry from '../../../../../../src/app/(Backend)/api/tags/route.js'
 import type { NextRequest } from 'next/server.js'
 

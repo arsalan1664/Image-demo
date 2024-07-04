@@ -21,7 +21,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { GetCategory } from "@/app/(Backend)/actions/category/getCategory";
 import { GetTag } from "@/app/(Backend)/actions/tag/getTag";
 import { toast } from "sonner";
@@ -36,12 +36,14 @@ type itemsTypes = {
 
 export function AddButton() {
   const [state, dispatch] = useFormState(AddPost, null);
+  const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
     if (state?.error) {
       toast.error(`${state?.error}`);
     }
     if (state?.success) {
       toast.success(`${state?.success}`);
+      formRef.current?.reset();
     }
     if (state?.info) {
       toast.info(`${state?.info}`);
@@ -77,7 +79,7 @@ export function AddButton() {
             Add Post, Click save when you are done.
           </DialogDescription>
         </DialogHeader>
-        <form action={dispatch}>
+        <form ref={formRef} action={dispatch}>
           <div className="grid grid-cols-2 gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="name" className="text-right">

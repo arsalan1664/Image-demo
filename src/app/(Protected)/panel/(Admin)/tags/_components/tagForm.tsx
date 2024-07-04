@@ -6,25 +6,27 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2, X } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { toast } from "sonner";
 
 export function Form() {
   const [state, dispatch] = useFormState(AddTag, null);
+  const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
     if (state?.error) {
       toast.error(`${state?.error}`);
     }
     if (state?.success) {
       toast.success(`${state?.success}`);
+      formRef.current?.reset();
     }
     if (state?.info) {
       toast.info(`${state?.info}`);
     }
   }, [state]);
   return (
-    <form className="flex" action={dispatch}>
+    <form ref={formRef} className="flex" action={dispatch}>
       <Input
         id="tag"
         name="tag"
