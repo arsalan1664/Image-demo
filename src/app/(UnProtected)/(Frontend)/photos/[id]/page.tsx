@@ -1,11 +1,17 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Copy, Download } from "lucide-react";
+import { Copy, Download, Facebook, Instagram, Twitter } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { db } from "@/lib/db";
 import BackButton from "./BackButton";
 import Image from "next/image";
 import { Metadata, ResolvingMetadata } from "next";
+import {
+  FacebookShareButton,
+  InstapaperShareButton,
+  TwitterShareButton,
+} from "react-share";
+import SocialButtons from "./SocialButtons";
 
 // export async function generateStaticParams() {
 //   const Posts = await db.posts.findMany();
@@ -71,34 +77,23 @@ async function Page({ params }: { params: any }) {
             <p className="text-gray-500 dark:text-gray-400 mb-4 md:mb-8">
               {data?.description}
             </p>
-            <Button size="lg">
-              <Download className="mr-4" /> Download
-            </Button>
-            <div className="flex items-center gap-2">
-              <Input
-                className="flex-1"
-                placeholder="Share link"
-                defaultValue="http://localhost:3000/photos/165fa6f9-6aee-43ef-8b8a-fbcd1f8848c8"
-                readOnly
-                type="text"
-              />
-              <Button size="sm" variant="outline">
-                <Copy className="w-4 h-4 mr-2" />
-                Copy
-              </Button>
-            </div>
-          </div>
-          <div className="grid gap-4 ">
-            <div className=" h-auto max-w-[36rem] space-y-4">
-              <h1 className="font-semibold text-xs">Tags</h1>
-              <div className="grid grid-cols-3 sm:grid-cols-5  items-center gap-2 w-full ">
-                {tags?.map((item, i) => (
-                  <h4 key={i} className="bg-secondary p-2 rounded-xl text-xs">
-                    {item}
-                  </h4>
-                ))}
+
+            <div className="grid gap-4 mb-6">
+              <div className=" h-auto max-w-[36rem] space-y-4">
+                <h1 className="font-semibold text-xs">Tags</h1>
+                <div className="grid grid-cols-3 sm:grid-cols-5  items-center gap-2 w-full ">
+                  {tags?.map((item, i) => (
+                    <h4 key={i} className="bg-secondary p-2 rounded-xl text-xs">
+                      {item}
+                    </h4>
+                  ))}
+                </div>
               </div>
             </div>
+            <Button size="lg" className="w-full">
+              <Download className="mr-4 " /> Download
+            </Button>
+            <SocialButtons />
           </div>
         </div>
       </div>

@@ -41,7 +41,10 @@ function SearchDropDown({ query }: { query: string | null }) {
         {categories?.map((item) => (
           <CommandItem
             key={item.id}
-            onSelect={() => router.push(`/c/${item.id}`)}
+            onSelect={() => {
+              console.log("first");
+              router.push(`/c/${item.id}`);
+            }}
           >
             <Layers3 className="mr-2 h-4 w-4" />
             <span>{item.title}</span>

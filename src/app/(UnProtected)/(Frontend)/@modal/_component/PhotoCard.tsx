@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import GetSinglePost from "@/app/(Backend)/actions/post/getSinglePost";
+import SocialButtons from "../../photos/[id]/SocialButtons";
 
 export default async function PhotoCard({ id }: { id: string }) {
   const data = await GetSinglePost({ id });
@@ -35,7 +36,7 @@ export default async function PhotoCard({ id }: { id: string }) {
   };
 
   return (
-    <div className="w-full absolute p-10 pb-2 h-full flex flex-col rounded-xl bg-background bg-clip-border shadow-md">
+    <div className="w-full  absolute p-10 pb-2 h-full flex flex-col rounded-xl bg-background bg-clip-border shadow-md">
       <div className="h-72 overflow-hidden rounded-xl bg-background bg-clip-border">
         <Image
           width={500}
@@ -61,7 +62,11 @@ export default async function PhotoCard({ id }: { id: string }) {
       </div>
 
       <div className="p-6">
-        <div className="gap-2 grid grid-cols-5 font-sans text-sm font-normal leading-normal antialiased opacity-75"></div>
+        <div className="gap-2 grid grid-cols-5 font-sans text-sm font-normal leading-normal antialiased opacity-75">
+          {tags.map((item) => (
+            <Badge>{item}</Badge>
+          ))}
+        </div>
       </div>
 
       <div className="p-6 mt-auto">
@@ -71,6 +76,7 @@ export default async function PhotoCard({ id }: { id: string }) {
         >
           Download
         </Button>
+        <SocialButtons />
       </div>
     </div>
   );

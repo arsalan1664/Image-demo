@@ -10,7 +10,7 @@ export default function Modal({ id }: { id: string }) {
   const router = useRouter();
   return (
     <Dialog open={true} onOpenChange={() => router.back()}>
-      <DialogContent className=" h-[90%]">
+      <DialogContent className="h-[90%]">
         <Suspense fallback={<LoadingCard />}>
           <PhotoCard id={id} />
         </Suspense>

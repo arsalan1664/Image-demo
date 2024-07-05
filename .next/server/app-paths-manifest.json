@@ -1,9 +1,0 @@
-{
-  "/(Backend)/api/categories/route": "app/(Backend)/api/categories/route.js",
-  "/(Backend)/api/sections/route": "app/(Backend)/api/sections/route.js",
-  "/(Protected)/panel/(Admin)/categories/page": "app/(Protected)/panel/(Admin)/categories/page.js",
-  "/(Protected)/panel/(Admin)/sections/page": "app/(Protected)/panel/(Admin)/sections/page.js",
-  "/(UnProtected)/(Frontend)/page": "app/(UnProtected)/(Frontend)/page.js",
-  "/(UnProtected)/(Frontend)/explore/page": "app/(UnProtected)/(Frontend)/explore/page.js",
-  "/(UnProtected)/(Frontend)/@modal/(.)photos/[id]/page": "app/(UnProtected)/(Frontend)/@modal/(.)photos/[id]/page.js"
-}

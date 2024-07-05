@@ -2,11 +2,23 @@
 
 import {
   Command,
+  CommandEmpty,
+  CommandGroup,
   CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
 } from "@/components/ui/command";
 import {
   ArrowBigRight,
+  Calculator,
+  Calendar,
+  CreditCard,
   Loader2,
+  Settings,
+  Smile,
+  User,
 } from "lucide-react";
 import React, { useState } from "react";
 import SearchDropDown from "./SearchDropDown";
@@ -38,6 +50,7 @@ function Animated_Search() {
               />
               <SearchDropDown query={query} />
             </Command>
+
             {!query && value && (
               <Loader2 className="animate-spin text-white/40  ml-auto" />
             )}
