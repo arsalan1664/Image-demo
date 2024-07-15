@@ -2,11 +2,14 @@ import React from "react";
 import Header from "../../../_components/Header";
 import { PostTable } from "./_components/postTable";
 import { GetPost } from "@/app/(Backend)/actions/post/getPost";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 ///// the code is inserted because of prerender error occure during build process
-
+export const metadata: Metadata = {
+  title: `Post Section `,
+};
 async function page() {
   const data = await GetPost();
   return (

@@ -36,12 +36,14 @@ type itemsTypes = {
 
 export function AddButton() {
   const [state, dispatch] = useFormState(AddPost, null);
+  const [open, setOpen] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
     if (state?.error) {
       toast.error(`${state?.error}`);
     }
     if (state?.success) {
+      setOpen(false);
       toast.success(`${state?.success}`);
       formRef.current?.reset();
     }
@@ -66,7 +68,7 @@ export function AddButton() {
   }, []);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button size={"sm"} variant={"secondary"}>
           <Plus className="mr-2 h-4 w-4" /> Add Items

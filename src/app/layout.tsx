@@ -7,7 +7,10 @@ import { ThemeProvider } from "@/components/ui/theme-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: `${process.env.WEBSITE_NAME}`,
+  title: {
+    template: `%s | ${process.env.WEBSITE_NAME} `,
+    default: `${process.env.WEBSITE_NAME}`,
+  },
   description:
     "Immerse yourself in a world of captivating images. Our gallery showcases a variety of images that will inspire and amaze you.",
 };
@@ -26,8 +29,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
-          <Toaster position="bottom-right" richColors />
+          <div className="bg-muted dark:bg-background">{children}</div>
+          <Toaster position="top-right" richColors />
         </ThemeProvider>
       </body>
     </html>

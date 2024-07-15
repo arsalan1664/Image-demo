@@ -13,8 +13,11 @@ export async function EditCategory(state: any, formData: FormData) {
     method: "PUT",
     body: formData,
   });
-
-  const res = await response.json();
-  revalidatePath("/", "layout");
-  return res;
+  if (response.ok) {
+    const res = await response.json();
+    revalidatePath("/", "page");
+    return res;
+  } else {
+    console.log(response);
+  }
 }

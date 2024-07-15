@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { error } from "console";
 import { NextRequest, NextResponse } from "next/server";
 
 // Helper function to validate Bearer token
@@ -12,7 +13,6 @@ function validateBearerToken(request: NextRequest) {
   }
 
   const bearerToken = authorizationHeader.substring(7); // Remove "Bearer " prefix
-
 
   // Example of a simple check
   if (bearerToken !== "uKkBUm36l8U=w2C_v!@") {
@@ -61,10 +61,38 @@ export async function POST(request: NextRequest): Promise<any> {
     }
 
     const body = await request.json();
-    const title = body.tag;
-    if (!title) return { error: `Tag Can Not Be Empty` };
-    // const capitalize_value = data.charAt(0).toUpperCase() + data.slice(1);
+    const rawTitle = body.tag;
 
+    function capitalizeWords(str: string) {
+      return str.replace(/\b\w/g, function (char: string) {
+        return char.toUpperCase();
+      });
+    }
+
+    // capital value
+    const title = capitalizeWords(rawTitle);
+
+    if (!title)
+      return NextResponse.json(
+        {
+          info: "Tag Can Not Be Empty",
+        },
+        { status: 201 }
+      );
+    const existingTitle = await db.tags.findFirst({
+      where: {
+        title,
+      },
+    });
+
+    // if (existingTitle) {
+    //   return NextResponse.json(
+    //     {
+    //       info: "Tag Already Exists",
+    //     },
+    //     { status: 201 }
+    //   );
+    // }
     const tag = await db.tags.create({
       data: {
         title,
@@ -163,6 +191,12 @@ export async function DELETE(request: NextRequest) {
     await db.tags.delete({
       where: {
         id,
+      },
+    });
+
+    await db.postTag.deleteMany({
+      where: {
+        tagId: null,
       },
     });
 

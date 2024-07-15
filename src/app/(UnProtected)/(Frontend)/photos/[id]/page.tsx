@@ -67,7 +67,7 @@ async function Page({ params }: { params: any }) {
             alt="Images"
             className=" object-cover border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800"
             height={300}
-            src={imageUrl}
+            src={process.env.NEXT_PUBLIC_URL + imageUrl}
             width={500}
           />
         </div>

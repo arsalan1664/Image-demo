@@ -214,7 +214,7 @@ export async function PUT(request: NextRequest) {
     const authorizationHeader = request.headers.get("Authorization");
     if (!authorizationHeader || !authorizationHeader.startsWith("Bearer ")) {
       return NextResponse.json(
-        { message: "Unauthorized: Bearer token missing or invalid" },
+        { error: "Unauthorized: Bearer token missing or invalid" },
         { status: 401 }
       );
     }
@@ -226,7 +226,7 @@ export async function PUT(request: NextRequest) {
     // Example of a simple check
     if (bearerToken !== "uKkBUm36l8U=w2C_v!@") {
       return NextResponse.json(
-        { message: "Unauthorized: Invalid Bearer token" },
+        { info: "Unauthorized: Invalid Bearer token" },
         { status: 401 }
       );
     }
@@ -248,55 +248,65 @@ export async function PUT(request: NextRequest) {
     });
 
     if (!existingItem) {
-      return NextResponse.json({ message: "ID not matched" }, { status: 404 });
+      return NextResponse.json({ info: "ID not matched" }, { status: 404 });
     }
 
     const imageName = `${Date.now()}-${cover_image.name}`; // Unique filename
-    try {
-      // Example: Save to local filesystem (replace with your storage solution)
 
-      await fs.writeFile(
-        `public/uploads/covers/${imageName}`,
-        cover_image.stream()
-      );
-    } catch (error) {
-      console.error(error);
-      return NextResponse.json(
-        { message: "Image upload failed" },
-        { status: 400 }
-      );
+    if (cover_image.name !== "undefined") {
+      try {
+        // Example: Save to local filesystem (replace with your storage solution)
+
+        await fs.writeFile(
+          `public/uploads/covers/${imageName}`,
+          cover_image.stream()
+        );
+      } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+          { error: "Image upload failed" },
+          { status: 400 }
+        );
+      }
+    }
+
+    const dataToUpdate: any = {
+      title,
+      metaTitle,
+      description,
+      metaDescription,
+      slug: "body.Slug",
+      section: { connect: { id: section } },
+      articles: "body.Article",
+    };
+
+    if (cover_image.name !== "undefined") {
+      dataToUpdate.imageUrl = `/uploads/covers/${imageName}`;
+    } else {
+      dataToUpdate.imageUrl = `${existingItem?.imageUrl}`;
     }
 
     const updatedItem = await db.categories.update({
       where: {
         id,
       },
-      data: {
-        title,
-        metaTitle,
-        description,
-        metaDescription,
-        slug: "body.Slug", // Modify as needed (e.g., generate slug from title)
-        imageUrl: `/uploads/covers/${imageName}`, // Image URL path
-        section: { connect: { id: section } },
-        articles: "body.Article",
-      },
+      data: dataToUpdate,
     });
     // delete prev image
     const prevImage = existingItem.imageUrl;
-
-    await fs.unlink(`public${prevImage}`);
-
+    if (cover_image.name !== "undefined") {
+      await fs.unlink(`public${prevImage}`);
+    }
     return NextResponse.json(
       {
         category: updatedItem,
-        message: "Category updated successfully",
+        success: "Category updated successfully",
       },
       { status: 200 }
     );
   } catch (error) {
     return NextResponse.json(
-      { message: "Something went wrong" },
+      { error: "Something went wrong" },
       { status: 500 }
     );
   }

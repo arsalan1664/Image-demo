@@ -183,7 +183,7 @@ export function PostTable({ data }: { data: any }) {
     },
     initialState: {
       pagination: {
-        pageSize: 5, // Set the page size to 5
+        pageSize: 20, // Set the page size to 20
       },
     },
   });

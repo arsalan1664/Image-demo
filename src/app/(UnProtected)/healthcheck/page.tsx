@@ -12,6 +12,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Check, Loader2, X } from "lucide-react";
+import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 

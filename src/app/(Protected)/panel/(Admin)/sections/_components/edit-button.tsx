@@ -16,7 +16,7 @@ import { EditSection } from "@/app/(Backend)/actions/section/editSection";
 import { useFormStatus } from "react-dom";
 import { Loader2, Pencil } from "lucide-react";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 export function EditButton({
@@ -29,12 +29,14 @@ export function EditButton({
   description: any;
 }) {
   const [state, dispatch] = useFormState(EditSection, null);
+  const [open, setOpen] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
     if (state?.error) {
       toast.error(`${state?.error}`);
     }
     if (state?.success) {
+      setOpen(false);
       toast.success(`${state?.success}`);
       formRef.current?.reset();
     }
@@ -44,7 +46,7 @@ export function EditButton({
   }, [state]);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="w-full">
         <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
           <Pencil size={16} className="mr-2" /> Edit

@@ -19,6 +19,8 @@ import { toast } from "sonner";
 
 export function AddButton() {
   const [state, dispatch] = useFormState(AddSection, null);
+  const [open, setOpen] = useState(false);
+
   const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
     if (state?.error) {
@@ -26,6 +28,7 @@ export function AddButton() {
     }
     if (state?.success) {
       toast.success(`${state?.success}`);
+      setOpen(false);
       formRef.current?.reset();
     }
     if (state?.info) {
@@ -38,7 +41,7 @@ export function AddButton() {
     }
   }, [state]);
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           size={"sm"}

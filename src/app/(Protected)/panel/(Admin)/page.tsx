@@ -7,40 +7,47 @@ import { GetTag } from "@/app/(Backend)/actions/tag/getTag";
 import { GetSection } from "@/app/(Backend)/actions/section/getSection";
 import { GetCategory } from "@/app/(Backend)/actions/category/getCategory";
 import { GetPost } from "@/app/(Backend)/actions/post/getPost";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 ///// the code is inserted because of prerender error occure during build process
 
+export const metadata: Metadata = {
+  title: `Dashboard `,
+};
+
 async function Dashboard() {
-  const tag = await GetTag();
-  const category = await GetCategory();
-  const section = await GetSection();
-  const post = await GetPost();
+  const [tag, category, section, post] = await Promise.all([
+    GetTag(),
+    GetCategory(),
+    GetSection(),
+    GetPost(),
+  ]);
   const CardArray = [
     {
       id: 1,
       title: "Number of Sections",
-      number: section.sections?.length || 0,
+      number: section.sections?.length || "--",
       color: "bg-gradient-to-tl from-teal-200 to-lime-200  ",
     },
 
     {
       id: 2,
       title: "Number of Categories",
-      number: category.categories?.length || 0,
+      number: category.categories?.length || "--",
       color: "bg-gradient-to-tl from-teal-200 to-teal-400",
     },
     {
       id: 3,
       title: "Number of Posts",
-      number: post.posts?.length || 0,
+      number: post.posts?.length || "--",
       color: "bg-gradient-to-tl from-violet-200 to-pink-200",
     },
     {
       id: 4,
       title: "Number of Tags",
-      number: tag.tags?.length || 0,
+      number: tag.tags?.length || "--",
       color: "bg-gradient-to-tl from-violet-400 to-purple-300",
     },
   ];
@@ -49,7 +56,7 @@ async function Dashboard() {
     <>
       <Header title={"Dashboard"} />
       <EaseIn>
-        <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
+        <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 ">
           <div className="grid gap-4 md:grid-cols-4">
             {CardArray.map((item) => (
               <Card key={item.id} className={`p-0 ${item.color}`}>

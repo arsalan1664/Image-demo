@@ -45,11 +45,13 @@ export function EditButton({
 }) {
   const [state, dispatch] = useFormState(EditCategory, null);
   const formRef = useRef<HTMLFormElement>(null);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     if (state?.error) {
       toast.error(`${state?.error}`);
     }
     if (state?.success) {
+      setOpen(false);
       toast.success(`${state?.success}`);
       formRef?.current?.reset();
     }
@@ -59,7 +61,7 @@ export function EditButton({
   }, [state]);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="w-full">
         <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
           <Pencil size={16} className="mr-2" /> Edit

@@ -1,10 +1,18 @@
 "use client";
+import { GetCategory } from "@/app/(Backend)/actions/category/getCategory";
 import { AddNavLink } from "@/app/(Backend)/actions/navlink/addNavlink";
 import { DeleteNavLink } from "@/app/(Backend)/actions/navlink/deleteNavlink";
 import { GetNavLink } from "@/app/(Backend)/actions/navlink/getNavlink";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Loader2, Plus, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -22,6 +30,7 @@ export default function NavlinkPage() {
   const [navlinks, setNavlinks] = useState<null | TNav>(null);
   const [state, dispatch] = useFormState(AddNavLink, null);
   const [deleteState, deleteDispatch] = useFormState(DeleteNavLink, null);
+
   const fetchData = async () => {
     const data = await GetNavLink();
     setNavlinks(data);
@@ -30,6 +39,17 @@ export default function NavlinkPage() {
     fetchData();
   }, [state, deleteState]);
 
+  const [category, setCategory] = useState<null | any[]>(null);
+  console.log(category);
+
+  const fetchCategory = async () => {
+    const data = await GetCategory();
+    setCategory(data.categories);
+  };
+
+  useEffect(() => {
+    fetchCategory();
+  }, []);
   const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
     if (state?.message === "success") {
@@ -49,40 +69,52 @@ export default function NavlinkPage() {
       <div className="flex flex-col items-start gap-8">
         <form ref={formRef} action={dispatch} className="flex gap-2">
           <Input
-            defaultValue={state?.fieldValues.title}
-            placeholder="Enter Nav title"
-            name="title"
-            required
-          />
-          <Input
-            defaultValue={state?.fieldValues.description}
+            value={".."}
             placeholder="Enter Nav Link"
             name="link"
             required
+            className="hidden"
           />
+          <Select required name="title">
+            <SelectTrigger className="w-[380px] mr-2">
+              <SelectValue placeholder="Select NavLinks" />
+            </SelectTrigger>
+            <SelectContent>
+              {category?.map((item): any => {
+                return (
+                  <SelectItem key={item.id} value={item.id}>
+                    {item.title}
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
           <DynamicButton />
         </form>
         <div className="grid grid-cols-4 md:grid-cols-8 gap-2">
-          {navlinks?.map((item, i) => (
-            // <Badge key={i}>{item.title}</Badge>
-            <Badge
-              key={item.id}
-              className="cursor-pointer p-2 pl-4 relative group"
-              variant="secondary"
-            >
-              {item.title}
-              <form action={deleteDispatch}>
-                <input
-                  className="hidden"
-                  name="id"
-                  id="id"
-                  value={item.id}
-                  readOnly
-                />
-                <MyButton />
-              </form>
-            </Badge>
-          ))}
+          {navlinks?.map((item, i) => {
+            const title = item.title.split("-")[0];
+            return (
+              // <Badge key={i}>{item.title}</Badge>
+              <Badge
+                key={item.id}
+                className="cursor-pointer p-2 pl-4 relative group"
+                variant="secondary"
+              >
+                {title}
+                <form action={deleteDispatch}>
+                  <input
+                    className="hidden"
+                    name="id"
+                    id="id"
+                    value={item.id}
+                    readOnly
+                  />
+                  <MyButton />
+                </form>
+              </Badge>
+            );
+          })}
         </div>
       </div>
     </div>

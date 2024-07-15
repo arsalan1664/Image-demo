@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 export async function AddTag(state: any, formData: FormData) {
   const tag = formData.get("tag");
   if (!tag) {
-    return;
+    return { info: "Tag cannot be empty" };
   }
   const data = { tag };
   const token = "Bearer uKkBUm36l8U=w2C_v!@";

@@ -12,7 +12,7 @@ export async function EditPost(state: any, formData: FormData) {
     method: "PUT",
     body: formData,
   });
-  console.log(response.statusText);
+
   const res = await response.json();
   revalidatePath("/");
   return res;

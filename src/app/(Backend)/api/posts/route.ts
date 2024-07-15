@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import { v4 as uuidv4 } from "uuid";
+import { disconnect } from "process";
 
 //////////////////////////////////////////
 ////////////// formData //////////////////
@@ -160,7 +161,7 @@ export async function PUT(request: NextRequest) {
   const description = formData.get("description") as string;
   const categoryId = formData.get("category") as string;
   const tagss = formData.get("tag") as any;
-  const tags = tagss.split(",") as any;
+  const tags = tagss ? tagss.split(",") : [];
   const image = formData.get("image") as any;
   const section = formData.get("section") as any; // Use Next.js built-in formData()
 
@@ -170,43 +171,62 @@ export async function PUT(request: NextRequest) {
     },
   });
 
-  const imageName = `${Date.now()}-${image.name}`; // Unique filename
-  try {
-    // Create the 'posts' directory if it doesn't exist
-    const dirPath = `public/uploads/posts/`;
-    await fs.mkdir(dirPath, { recursive: true });
+  if (!existingItem) {
+    return NextResponse.json({ info: "Post not found" }, { status: 404 });
+  }
 
-    // Save the image to the 'posts' directory
-    await fs.writeFile(`${dirPath}${imageName}`, image.stream());
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json(
-      { message: "Image upload failed" },
-      { status: 400 }
-    );
+  let imageName = `${Date.now()}-${image.name}`; // Unique filename
+  if (image.name !== "undefined") {
+    try {
+      // Create the 'posts' directory if it doesn't existn
+      const dirPath = `public/uploads/posts/`;
+      await fs.mkdir(dirPath, { recursive: true });
+
+      // Save the image to the 'posts' directory
+      await fs.writeFile(`${dirPath}${imageName}`, image.stream());
+    } catch (error) {
+      console.error(error);
+      return NextResponse.json(
+        { message: "Image upload failed" },
+        { status: 400 }
+      );
+    }
   }
 
   try {
+    const existingTags = await db.postTag.findMany({
+      where: { postId: existingItem.id },
+    });
+    const dataToUpdate: any = {
+      title,
+      description,
+      category: { connect: { id: categoryId } },
+      postTags: {
+        delete: existingTags.map((tag: any) => ({ id: tag.id })),
+        // disconnect: existingTags.map((tag: any) => ({ id: tag.postId })),
+        connectOrCreate: tags.map((tag: any) => ({
+          where: { id: tag },
+          create: { tagId: tag },
+        })),
+      },
+    };
+
+    if (image.name !== "undefined") {
+      dataToUpdate.imageUrl = `/uploads/posts/${imageName}`;
+    } else {
+      dataToUpdate.imageUrl = `${existingItem?.imageUrl}`;
+    }
+
     const post = await db.posts.update({
       where: { id },
-      data: {
-        title,
-        description,
-        category: { connect: { id: categoryId } },
-        imageUrl: `/uploads/posts/${imageName}`, // Image URL path
-
-        postTags: {
-          connectOrCreate: tags.map((tag: any) => ({
-            where: { id: tag },
-            create: { tagId: tag },
-          })),
-        },
-      },
+      data: dataToUpdate,
       include: { postTags: true },
     });
-    const prevImg = existingItem?.imageUrl;
 
-    await fs.unlink(`public${prevImg}`);
+    const prevImg = existingItem?.imageUrl;
+    if (image.name !== "undefined") {
+      await fs.unlink(`public${prevImg}`);
+    }
 
     return NextResponse.json(
       {

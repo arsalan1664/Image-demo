@@ -8,7 +8,10 @@ export async function GetCategory() {
       Authorization: token,
     },
   });
-
-  const res = await response.json();
-  return res;
+  if (response.ok) {
+    const res = await response.json();
+    return res;
+  } else {
+    console.log(response);
+  }
 }

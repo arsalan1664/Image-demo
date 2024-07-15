@@ -1,9 +1,14 @@
 import Header from "@/app/(Protected)/_components/Header";
 import { SectionTable } from "./_components/section-table";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 ///// the code is inserted because of prerender error occure during build process
+
+export const metadata: Metadata = {
+  title: `Section `,
+};
 
 function Categories() {
   return (

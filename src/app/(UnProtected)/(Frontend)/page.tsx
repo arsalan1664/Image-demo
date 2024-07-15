@@ -5,11 +5,15 @@ import { GetPost } from "@/app/(Backend)/actions/post/getPost";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Loader2Icon } from "lucide-react";
 import { TabCarousel } from "../_components/TabCarousel";
-import { GetCategory } from "@/app/(Backend)/actions/category/getCategory";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 ///// the code is inserted because of prerender error occure during build process
+
+export const metadata: Metadata = {
+  title: `Homepage`,
+};
 
 async function Home() {
   const images = await GetPost();

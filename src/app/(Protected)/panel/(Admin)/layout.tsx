@@ -1,5 +1,7 @@
+import { Metadata } from "next";
 import Header from "../../_components/Header";
 import Sidebar from "../../_components/Sidebar";
+
 
 export default function AdminLayout({
   children,
@@ -11,7 +13,7 @@ export default function AdminLayout({
       <div className="hidden border-r dark:border-r-zinc-700/30 bg-secondary lg:block dark:bg-secondary/30">
         <Sidebar />
       </div>
-      <div className="flex flex-col">{children}</div>
+      <div className="flex flex-col bg-background">{children}</div>
     </div>
   );
 }

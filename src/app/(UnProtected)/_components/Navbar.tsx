@@ -21,11 +21,14 @@ const Navbar = async () => {
           </span>
         </Link>
         <div className="hidden md:flex items-center gap-5 text-muted-foreground text-sm">
-          {navlinks?.map((item, i) => (
-            <Link key={i} href={item.link}>
-              {item.title}
-            </Link>
-          ))}
+          {navlinks?.map((item, i) => {
+            const title = item.title.split("-")[0];
+            return (
+              <Link key={i} href={`/c/${item.title}`}>
+                {title}
+              </Link>
+            );
+          })}
 
           <ThemeToggle />
         </div>

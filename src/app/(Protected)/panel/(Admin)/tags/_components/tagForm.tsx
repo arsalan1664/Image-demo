@@ -4,8 +4,19 @@ import { DeleteTag } from "@/app/(Backend)/actions/tag/deleteTag";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Loader2, X } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import { Copy, Loader2, X } from "lucide-react";
 import React, { useEffect, useRef } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { toast } from "sonner";
@@ -81,43 +92,60 @@ export function Loop({ data }: { data: data }) {
           className="cursor-pointer p-2 pl-4 relative group"
           variant="secondary"
         >
-          {tag.title}
-          <form action={dispatch}>
-            <input
-              className="hidden"
-              name="id"
-              id="id"
-              value={tag.id}
-              readOnly
-            />
-            <MyButton />
-          </form>
+          {tag.title} 
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                variant={"destructive"}
+                className={
+                  "h-4 p-0 rounded-full  absolute -top-3 right-0  hidden group-hover:block"
+                }
+                type="button"
+              >
+                <X className="h-3 w-4" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                <DialogDescription>
+                  This action cannot be undone. Are you sure you want to
+                  permanently delete this file from our servers?
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <form action={dispatch}>
+                  <input
+                    className="hidden"
+                    name="id"
+                    id="id"
+                    value={tag.id}
+                    readOnly
+                  />
+                  <MyButton />
+                </form>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </Badge>
       ))}
     </div>
   );
 }
 
-const MyButton = () => {
+function MyButton() {
   const { pending } = useFormStatus();
   return (
-    <Button
-      variant={"destructive"}
-      className={
-        pending
-          ? "h-4 p-0 rounded-full  absolute -top-3 right-0 "
-          : "h-4 p-0 rounded-full  absolute -top-3 right-0  hidden group-hover:block"
-      }
-      type="submit"
-      disabled={pending}
-    >
+    <Button type="submit" disabled={pending}>
       {pending ? (
         <>
-          <Loader2 className="animate-spin h-2 w-2 m-1" />
+          <Loader2 className="animate-spin h-4 w-4 mr-2" /> Loading..
         </>
       ) : (
-        <X className="h-3 w-4" />
+        "Delete"
       )}
     </Button>
   );
-};
+}
+
+export default MyButton;

@@ -16,16 +16,18 @@ import { useFormStatus } from "react-dom";
 import { Loader2, Trash } from "lucide-react";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { DeleteSection } from "@/app/(Backend)/actions/section/deleteSection";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export function DeleteButton({ id }: { id: string }) {
   const [state, dispatch] = useFormState(DeleteSection, null);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     if (state?.error) {
       toast.error(`${state?.error}`);
     }
     if (state?.success) {
+      setOpen(false);
       toast.success(`${state?.success}`);
     }
     if (state?.info) {
@@ -34,7 +36,7 @@ export function DeleteButton({ id }: { id: string }) {
   }, [state]);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="w-full">
         <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
           <Trash size={16} className="mr-2" /> Delete

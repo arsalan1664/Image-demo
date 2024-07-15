@@ -1,28 +1,43 @@
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  TagIcon,
+  DownloadIcon,
+
+} from "lucide-react";
 
 const LoadingCard = () => {
   return (
-    <div className=" p-6 pb-2 h-full flex flex-col rounded-xl bg-background bg-clip-bordershadow-md">
-      <div className="h-72 overflow-hidden rounded-xl bg-background bg-clip-border">
-        <Skeleton className="h-full " />
+    <div className=" flex flex-col md:flex-row items-start justify-between gap-8 max-w-6xl mx-auto px-4 py-6">
+      <div className="flex-1 w-full md:w-auto ml-auto">
+        <Skeleton className="h-96 w-96 " />
       </div>
-      <div className="p-6 pb-2">
-        <div className="mb-2 flex items-center justify-between">
-          <Skeleton className="h-5 w-full" />
+      <div className="flex-1 w-full grid gap-8">
+        <div>
+          <Skeleton className="h-8 w-96" />
+          <Skeleton className="h-8 w-96 mt-2" />
         </div>
-        <Skeleton className="h-5 w-full" />
-      </div>
-      <div className="p-6 py-3">
-        <div className="gap-2 grid grid-cols-5 font-sans text-sm font-normal leading-normal antialiased opacity-75">
-          <Skeleton className="h-5 w-full" />
-          <Skeleton className="h-5 w-full" />
-          <Skeleton className="h-5 w-full" />
-          <Skeleton className="h-5 w-full" />
-          <Skeleton className="h-5 w-full" />
+
+        <div className="flex flex-wrap gap-2">
+          <div className="inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1 text-sm font-medium">
+            <TagIcon className="w-4 h-4" />
+            ...
+          </div>
+          <div className="inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1 text-sm font-medium">
+            <TagIcon className="w-4 h-4" />
+            ...
+          </div>
+          <div className="inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1 text-sm font-medium">
+            <TagIcon className="w-4 h-4" />
+            ...
+          </div>
         </div>
-      </div>
-      <div className="p-6  mt-auto">
-        <Skeleton className="h-10 w-full rounded-full" />
+        <div className="flex items-center gap-4 mt-">
+          <Button size="lg" disabled className="bg-opacity-70">
+            <DownloadIcon className="w-5 h-5 mr-2" />
+            Download
+          </Button>
+        </div>
       </div>
     </div>
   );

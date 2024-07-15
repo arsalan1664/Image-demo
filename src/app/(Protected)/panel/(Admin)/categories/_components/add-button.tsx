@@ -29,12 +29,14 @@ import { GetSection } from "@/app/(Backend)/actions/section/getSection";
 
 export function AddButton() {
   const [state, dispatch] = useFormState(AddCategory, null);
+  const [open, setOpen] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
     if (state?.error) {
       toast.error(`${state?.error}`);
     }
     if (state?.success) {
+      setOpen(false);
       toast.success(`${state?.success}`);
       formRef.current?.reset();
     }
@@ -42,8 +44,9 @@ export function AddButton() {
       toast.info(`${state?.info}`);
     }
   }, [state]);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           size={"sm"}

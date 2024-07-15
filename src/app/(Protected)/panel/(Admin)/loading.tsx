@@ -1,12 +1,20 @@
-import { Loader2 } from "lucide-react";
 import React from "react";
+import Header from "../../_components/Header";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function Loading() {
   return (
-    <div className="flex justify-center items-center h-screen w-full">
-      <Loader2 className="mr-2 animate-spin h-4" />
-      Loading ..
-    </div>
+    <>
+      <Header title={""} />
+      <main className="flex flex-1 flex-col gap-4 p-4 md:gap-5 md:p-6 mt-5">
+        <Skeleton className="w-[50%] h-8" />
+        <Skeleton className="w-full h-8" />
+        <Skeleton className="w-full h-8" />
+        <Skeleton className="w-full h-8" />
+        <Skeleton className="w-full h-8" />
+        <Skeleton className="w-full h-8" />
+      </main>
+    </>
   );
 }
 
