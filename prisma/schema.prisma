@@ -19,11 +19,11 @@ model Tags {
 
 model PostTag {
   id        String   @id @default(uuid())
-  postId    String
+  postId    String?
   tagId     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  post      Posts    @relation(fields: [postId], references: [id])
+  post      Posts?   @relation(fields: [postId], references: [id])
   tag       Tags?    @relation(fields: [tagId], references: [id])
 }
 
@@ -35,6 +35,7 @@ model Posts {
   categoriesId String?
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
+  filetype     String
   postTags     PostTag[]
   category     Categories? @relation(fields: [categoriesId], references: [id])
 }
@@ -85,4 +86,31 @@ model NavItems {
   id    Int    @id @default(autoincrement())
   title String
   link  String
+}
+
+model WebsiteName {
+  id    Int    @id @default(autoincrement())
+  title String
+}
+
+model WebsiteLogo {
+  id      Int    @id @default(autoincrement())
+  logosrc String
+}
+
+model WebsiteDarkLogo {
+  id      Int    @id @default(autoincrement())
+  logosrc String
+}
+
+model HomeMeta {
+  id        Int    @id @default(autoincrement())
+  metaTitle String
+  metaDesc  String
+}
+
+model HeroSection {
+  id    Int    @id @default(autoincrement())
+  title String
+  desc  String
 }

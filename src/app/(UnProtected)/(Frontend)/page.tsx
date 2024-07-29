@@ -6,25 +6,29 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Loader2Icon } from "lucide-react";
 import { TabCarousel } from "../_components/TabCarousel";
 import { Metadata } from "next";
+import Explore from "./explore/Explore";
+import { GetSection } from "@/app/(Backend)/actions/section/getSection";
+import { GetHomePage } from "@/app/(Backend)/actions/metatitle/metaTitle";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 ///// the code is inserted because of prerender error occure during build process
 
-export const metadata: Metadata = {
-  title: `Homepage`,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const res = await GetHomePage();
+  return {
+    title: `${res.success?.metaTitle}`,
+    description: `${res.success?.metaDesc}`,
+  };
+}
 
 async function Home() {
-  const images = await GetPost();
-
+  const { sections } = await GetSection();
   return (
     <>
       <HeroSection />
       <TabCarousel />
-      <Suspense fallback={<Loading />}>
-        <Images images={images} />
-      </Suspense>
+      <Explore sections={sections} />
     </>
   );
 }

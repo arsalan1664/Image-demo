@@ -28,6 +28,7 @@ import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Textarea } from "@/components/ui/textarea";
 
 type itemsTypes = {
   id: string;
@@ -98,7 +99,7 @@ export function AddButton() {
               <Label htmlFor="username" className="text-right">
                 Description
               </Label>
-              <Input
+              <Textarea
                 required
                 name="description"
                 className="col-span-3"
@@ -111,8 +112,22 @@ export function AddButton() {
             </div>
 
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label className="text-right">Image</Label>
-              <Input required name="image" type="file" className="col-span-3" />
+              <Label className="text-right">Upload</Label>
+              <Input required name="file" type="file" className="col-span-3" />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label className="text-right">File Type</Label>
+              <Select required name="Filetype">
+                <SelectTrigger className="w-[270px]">
+                  <SelectValue placeholder="Select a file type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={"Image"}>Image</SelectItem>
+                  <SelectItem value="Video">Video</SelectItem>
+                  <SelectItem value="Gif">Gif</SelectItem>
+                  <SelectItem value="Phrases">Phrases</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
           <div className="pl-7 mb-5">

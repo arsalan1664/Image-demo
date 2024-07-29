@@ -54,7 +54,9 @@ function Header({ title }: { title: string }) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => router.push("/panel/setting")}>
+            <DropdownMenuItem
+              onClick={() => router.push("/panel/setting/websitename")}
+            >
               Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />

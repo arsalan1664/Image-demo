@@ -28,26 +28,26 @@ async function Dashboard() {
     {
       id: 1,
       title: "Number of Sections",
-      number: section.sections?.length || "--",
+      number: section?.sections?.length || "--",
       color: "bg-gradient-to-tl from-teal-200 to-lime-200  ",
     },
 
     {
       id: 2,
       title: "Number of Categories",
-      number: category.categories?.length || "--",
+      number: category?.categories?.length || "--",
       color: "bg-gradient-to-tl from-teal-200 to-teal-400",
     },
     {
       id: 3,
       title: "Number of Posts",
-      number: post.posts?.length || "--",
+      number: post?.posts?.length || "--",
       color: "bg-gradient-to-tl from-violet-200 to-pink-200",
     },
     {
       id: 4,
       title: "Number of Tags",
-      number: tag.tags?.length || "--",
+      number: tag?.tags?.length || "--",
       color: "bg-gradient-to-tl from-violet-400 to-purple-300",
     },
   ];

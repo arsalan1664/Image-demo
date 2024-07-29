@@ -3,17 +3,21 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import GetName from "./(Backend)/actions/websitename/getName";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: {
-    template: `%s | ${process.env.WEBSITE_NAME} `,
-    default: `${process.env.WEBSITE_NAME}`,
-  },
-  description:
-    "Immerse yourself in a world of captivating images. Our gallery showcases a variety of images that will inspire and amaze you.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const Name = await GetName();
+  return {
+    title: {
+      template: `%s - ${Name.success?.title} `,
+      default: `${Name.success?.title}`,
+    },
+    description:
+      "Immerse yourself in a world of captivating images. Our gallery showcases a variety of images that will inspire and amaze you.",
+  };
+}
 
 export default function RootLayout({
   children,
@@ -29,7 +33,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="bg-muted dark:bg-background">{children}</div>
+          <div className="bg-muted dark:bg-background ">{children}</div>
           <Toaster position="top-right" richColors />
         </ThemeProvider>
       </body>

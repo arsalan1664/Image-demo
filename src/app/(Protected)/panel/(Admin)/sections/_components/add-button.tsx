@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { AddSection } from "@/app/(Backend)/actions/section/addSection";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { Textarea } from "@/components/ui/textarea";
 
 export function AddButton() {
   const [state, dispatch] = useFormState(AddSection, null);
@@ -75,7 +76,7 @@ export function AddButton() {
               <Label htmlFor="username" className="text-right">
                 Description
               </Label>
-              <Input
+              <Textarea
                 required
                 name="description"
                 className="col-span-3"

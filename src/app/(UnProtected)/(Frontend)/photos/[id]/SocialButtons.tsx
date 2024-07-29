@@ -9,7 +9,7 @@ import {
   LinkedinShareButton,
 } from "react-share";
 
-function SocialButtons() {
+export function SocialButtons() {
   const pathname = usePathname();
   const FacebookUrl = process.env.NEXT_PUBLIC_URL_API + pathname;
   const LinkedinUrl = process.env.NEXT_PUBLIC_URL_API + pathname;
@@ -29,4 +29,22 @@ function SocialButtons() {
   );
 }
 
-export default SocialButtons;
+export function SocialButtons2() {
+  const pathname = usePathname();
+  const FacebookUrl = process.env.NEXT_PUBLIC_URL_API + pathname;
+  const LinkedinUrl = process.env.NEXT_PUBLIC_URL_API + pathname;
+  const TwiterUrl = process.env.NEXT_PUBLIC_URL_API + pathname;
+  return (
+    <div className="space-x-4 flex items-center justify-start w-full mt-4">
+      <FacebookShareButton url={FacebookUrl}>
+        <Facebook />
+      </FacebookShareButton>
+      <TwitterShareButton url={TwiterUrl}>
+        <Twitter />
+      </TwitterShareButton>
+      <LinkedinShareButton url={LinkedinUrl}>
+        <Linkedin />
+      </LinkedinShareButton>
+    </div>
+  );
+}

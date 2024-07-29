@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import { v4 as uuidv4 } from "uuid";
+import CapitalizeWords from "@/lib/capitalizeWords";
 
 export async function GET(request: NextRequest) {
   try {
@@ -156,9 +157,19 @@ export async function POST(request: NextRequest) {
     return;
   }
 
-  if (!formData) {
-    return;
+  const existingItem = await db.categories.findFirst({
+    where: {
+      title,
+    },
+  });
+
+  if (existingItem) {
+    return NextResponse.json(
+      { info: "Category with this title already exists" },
+      { status: 200 }
+    );
   }
+
   const imageName = `${Date.now()}-${cover_image.name}`; // Unique filename
   try {
     // Example: Save to local filesystem (replace with your storage solution)
@@ -188,7 +199,7 @@ export async function POST(request: NextRequest) {
   const category = await db.categories.create({
     data: {
       id,
-      title,
+      title: CapitalizeWords(title),
       metaTitle,
       description,
       metaDescription,
@@ -247,6 +258,19 @@ export async function PUT(request: NextRequest) {
       },
     });
 
+    const existingTitle = await db.categories.findFirst({
+      where: {
+        title,
+      },
+    });
+
+    if (existingTitle) {
+      return NextResponse.json(
+        { info: "Category with this title already exists" },
+        { status: 200 }
+      );
+    }
+
     if (!existingItem) {
       return NextResponse.json({ info: "ID not matched" }, { status: 404 });
     }
@@ -271,7 +295,7 @@ export async function PUT(request: NextRequest) {
     }
 
     const dataToUpdate: any = {
-      title,
+      title: CapitalizeWords(title),
       metaTitle,
       description,
       metaDescription,

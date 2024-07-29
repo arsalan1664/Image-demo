@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import EaseIn from "@/lib/ease_In";
 import { AlertCircle, Loader2 } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useFormState, useFormStatus } from "react-dom";

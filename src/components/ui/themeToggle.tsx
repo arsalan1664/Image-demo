@@ -4,7 +4,11 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "./button";
 
-export function ThemeToggle() {
+type ThemeType = {
+  size?: "default" | "sm" | "lg" | "icon" | null | undefined;
+};
+
+export function ThemeToggle({ size = "default" }: ThemeType) {
   const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
@@ -12,7 +16,7 @@ export function ThemeToggle() {
   };
 
   return (
-    <Button onClick={toggleTheme} variant="outline">
+    <Button size={size} onClick={toggleTheme} variant="outline">
       <Sun className="h-4 w-4" />
     </Button>
   );

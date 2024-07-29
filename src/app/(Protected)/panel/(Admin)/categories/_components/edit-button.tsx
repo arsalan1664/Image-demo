@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { EditCategory } from "@/app/(Backend)/actions/category/editCategory";
+import { Textarea } from "@/components/ui/textarea";
 
 export function EditButton({
   id,
@@ -90,7 +91,7 @@ export function EditButton({
               <Label htmlFor="username" className="text-right">
                 Description
               </Label>
-              <Input
+              <Textarea
                 name="description"
                 defaultValue={description}
                 className="col-span-3"

@@ -3,13 +3,6 @@ import Images from "../../../_components/Images";
 import Image from "next/image";
 import { Metadata, ResolvingMetadata } from "next";
 
-// export async function generateStaticParams() {
-//   const categories = await db.categories.findMany();
-//   return categories?.map((item: any) => ({
-//     id: item.id,
-//   }));
-// }
-
 export async function generateMetadata(
   { params }: { params: { id: string } },
   parent: ResolvingMetadata
@@ -42,6 +35,21 @@ export default async function Category({ params }: { params: { id: string } }) {
   });
   const imageUrl = categories?.imageUrl as string;
 
+  // let tagssArray: any[] = [];
+  // categories?.posts.map((i: any) => {
+  //   i.postTags.map((j: any) => {
+  //     tagssArray.push(j.tagId);
+  //   });
+  // });
+
+  // const filteredTags = await db.tags.findMany({
+  //   where: {
+  //     id: {
+  //       in: tagssArray,
+  //     },
+  //   },
+  // });
+
   return (
     <div className="">
       <div className="relative">
@@ -61,23 +69,8 @@ export default async function Category({ params }: { params: { id: string } }) {
           <p className="mt-2 text-lg text-white">{categories?.description}</p>
         </div>
       </div>
-      {/* <div className="container mx-auto grid grid-cols-3 gap-4 p-4">
-        <div className="col-span-2">
-          <Image
-            alt="Advertise on Unsplash"
-            className="w-full"
-            height="300"
-            src="/placeholder.svg"
-            style={{
-              aspectRatio: "900/300",
-              objectFit: "cover",
-            }}
-            width="900"
-          />
-        </div>
-        <div></div>
-      </div> */}
-      <Images images={categories} />
+
+      <Images images={categories} tags={[]} />
     </div>
   );
 }

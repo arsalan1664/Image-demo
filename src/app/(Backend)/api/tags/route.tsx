@@ -1,3 +1,4 @@
+import CapitalizeWords from "@/lib/capitalizeWords";
 import { db } from "@/lib/db";
 import { error } from "console";
 import { NextRequest, NextResponse } from "next/server";
@@ -63,14 +64,8 @@ export async function POST(request: NextRequest): Promise<any> {
     const body = await request.json();
     const rawTitle = body.tag;
 
-    function capitalizeWords(str: string) {
-      return str.replace(/\b\w/g, function (char: string) {
-        return char.toUpperCase();
-      });
-    }
-
     // capital value
-    const title = capitalizeWords(rawTitle);
+    const title = CapitalizeWords(rawTitle);
 
     if (!title)
       return NextResponse.json(
@@ -85,14 +80,14 @@ export async function POST(request: NextRequest): Promise<any> {
       },
     });
 
-    // if (existingTitle) {
-    //   return NextResponse.json(
-    //     {
-    //       info: "Tag Already Exists",
-    //     },
-    //     { status: 201 }
-    //   );
-    // }
+    if (existingTitle) {
+      return NextResponse.json(
+        {
+          info: "Tag Already Exists",
+        },
+        { status: 201 }
+      );
+    }
     const tag = await db.tags.create({
       data: {
         title,

@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import { v4 as uuidv4 } from "uuid";
 import { disconnect } from "process";
+import CapitalizeWords from "@/lib/capitalizeWords";
 
 //////////////////////////////////////////
 ////////////// formData //////////////////
@@ -34,8 +35,11 @@ export async function POST(request: NextRequest) {
   const categoryId = formData.get("category") as string;
   const tag = formData.get("tag") as string;
   const tagArry = tag.split(",");
-  const image = formData.get("image") as any;
+  const image = formData.get("file") as any;
+  const filetype = formData.get("Filetype") as any;
   const section = formData.get("section") as any;
+
+  console.log(filetype, formData);
 
   const imageName = `${Date.now()}-${image.name}`;
   try {
@@ -61,7 +65,7 @@ export async function POST(request: NextRequest) {
   const post = await db.posts.create({
     data: {
       id,
-      title,
+      title: CapitalizeWords(title),
       description,
       category: { connect: { id: categoryId } },
       imageUrl: `/uploads/posts/${imageName}`, // Image URL path
@@ -162,7 +166,8 @@ export async function PUT(request: NextRequest) {
   const categoryId = formData.get("category") as string;
   const tagss = formData.get("tag") as any;
   const tags = tagss ? tagss.split(",") : [];
-  const image = formData.get("image") as any;
+  const image = formData.get("file") as any;
+  const filetype = formData.get("Filetype") as any;
   const section = formData.get("section") as any; // Use Next.js built-in formData()
 
   const existingItem = await db.posts.findUnique({
@@ -198,8 +203,9 @@ export async function PUT(request: NextRequest) {
       where: { postId: existingItem.id },
     });
     const dataToUpdate: any = {
-      title,
+      title: CapitalizeWords(title),
       description,
+      filetype,
       category: { connect: { id: categoryId } },
       postTags: {
         delete: existingTags.map((tag: any) => ({ id: tag.id })),

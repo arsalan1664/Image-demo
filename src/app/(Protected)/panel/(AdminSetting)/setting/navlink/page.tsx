@@ -17,6 +17,7 @@ import { Separator } from "@/components/ui/separator";
 import { Loader2, Plus, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
+import { toast } from "sonner";
 
 type TNav =
   | {
@@ -52,8 +53,13 @@ export default function NavlinkPage() {
   }, []);
   const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
-    if (state?.message === "success") {
-      formRef.current?.reset();
+    formRef.current?.reset();
+    if (state?.success) {
+      toast.success(state.message);
+    } else if (state?.error) {
+      toast.error(state.message);
+    } else if (state?.info) {
+      toast.info(state.message);
     }
   }, [state]);
 

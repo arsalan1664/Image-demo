@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 
-import { ChevronDownIcon } from "lucide-react";
+import { ChevronDownIcon, Loader2, Trash2 } from "lucide-react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -34,41 +34,56 @@ import {
 
 import { AddButton } from "./add-button";
 import { ActionButton } from "./action-button";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
+import { BulkDeletePost } from "@/app/(Backend)/actions/post/bulkDelete";
+import { toast } from "sonner";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export type Type = {
   id: string;
-  image: string;
+  imageUrl: string;
   title: string;
   description: string;
   category: any;
   no_of_posts: number;
+  filetype: string;
 };
 
 export const columns: ColumnDef<Type>[] = [
-  // {
-  //   id: "select",
-  //   header: ({ table }) => (
-  //     <Checkbox
-  //       checked={
-  //         table.getIsAllPageRowsSelected() ||
-  //         (table.getIsSomePageRowsSelected() && "indeterminate")
-  //       }
-  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-  //       aria-label="Select all"
-  //     />
-  //   ),
-  //   cell: ({ row }) => (
-  //     <Checkbox
-  //       checked={row.getIsSelected()}
-  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
-  //       aria-label="Select row"
-  //     />
-  //   ),
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        className="rounded"
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        className="rounded"
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: "id",
     header: () => <div className="text-center">Id</div>,
@@ -81,18 +96,42 @@ export const columns: ColumnDef<Type>[] = [
     accessorKey: "imageUrl",
     header: "Image",
     cell: ({ row }) => {
-      return (
-        <>
-          <Image
-            id="image"
-            width={80}
-            height={40}
-            src={process.env.NEXT_PUBLIC_URL + "" + row.getValue("imageUrl")}
-            alt="cover image"
-            className="drop-shadow-lg "
-          />
-        </>
-      );
+      console.log(row.original.filetype);
+      if (row.original.filetype !== "Video")
+        return (
+          <>
+            <Image
+              id="image"
+              width={80}
+              height={40}
+              src={process.env.NEXT_PUBLIC_URL + "" + row.getValue("imageUrl")}
+              alt="cover image"
+              className="drop-shadow-lg "
+            />
+          </>
+        );
+      else if (row.original.filetype === "Video") {
+        return (
+          <>
+            <video width="320" height="240" controls preload="none">
+              <source
+                src={
+                  process.env.NEXT_PUBLIC_URL + "" + row.getValue("imageUrl")
+                }
+                width={80}
+                height={40}
+              />
+              <track
+                src="/path/to/captions.vtt"
+                kind="subtitles"
+                srcLang="en"
+                label="English"
+              />
+              Your browser does not support the video tag.
+            </video>
+          </>
+        );
+      }
     },
   },
   {
@@ -188,6 +227,30 @@ export function PostTable({ data }: { data: any }) {
     },
   });
 
+  const [loading, setLoading] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
+
+  const SelectedRowsIds = table
+    .getFilteredSelectedRowModel()
+    .flatRows.map((item) => item.original.id);
+  const SelectedRowsImages = table
+    .getFilteredSelectedRowModel()
+    .flatRows.map((item) => item.original.imageUrl);
+
+  const handleBulkDelete = async () => {
+    setLoading(true);
+    const res = await BulkDeletePost(SelectedRowsIds, SelectedRowsImages);
+    setLoading(false);
+    setOpen(false);
+
+    if (res.success) {
+      toast.success(res.success);
+      table.resetRowSelection();
+    } else {
+      toast.error(res.error);
+    }
+  };
+
   return (
     <div className="w-full">
       {/* Header */}
@@ -227,8 +290,47 @@ export function PostTable({ data }: { data: any }) {
               })}
           </DropdownMenuContent>
         </DropdownMenu>
+
         <div className="ml-auto space-x-2 flex items-center">
           <AddButton />
+
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button
+                disabled={SelectedRowsIds.length === 0}
+                variant="destructive"
+                size="sm"
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </DialogTrigger>
+
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                <DialogDescription>
+                  This action cannot be undone. Are you sure you want to
+                  permanently delete this file from our servers?
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <Button
+                  type="submit"
+                  onClick={handleBulkDelete}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="animate-spin h-4 w-4 mr-2" />{" "}
+                      Loading..{" "}
+                    </>
+                  ) : (
+                    "Confirm"
+                  )}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
       {/* Table */}

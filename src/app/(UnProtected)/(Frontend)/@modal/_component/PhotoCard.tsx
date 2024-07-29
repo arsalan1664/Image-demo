@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import GetSinglePost from "@/app/(Backend)/actions/post/getSinglePost";
-import SocialButtons from "../../photos/[id]/SocialButtons";
+import { SocialButtons2 } from "../../photos/[id]/SocialButtons";
 import Link from "next/link";
 import {
   DownloadIcon,
@@ -122,7 +122,7 @@ export default async function PhotoCard({ id }: { id: string }) {
               <DownloadIcon className="w-5 h-5 mr-2" />
               Download
             </Button>
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
               <Link
                 href="#"
                 className="text-muted-foreground hover:text-primary"
@@ -147,7 +147,8 @@ export default async function PhotoCard({ id }: { id: string }) {
                 <LinkedinIcon className="w-6 h-6" />
                 <span className="sr-only">Share on LinkedIn</span>
               </Link>
-            </div>
+            </div> */}
+            <SocialButtons2 />
           </div>
         </div>
       </div>

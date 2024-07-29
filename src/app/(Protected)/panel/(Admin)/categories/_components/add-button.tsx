@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/select";
 import { AddCategory } from "@/app/(Backend)/actions/category/addCategory";
 import { GetSection } from "@/app/(Backend)/actions/section/getSection";
+import { Textarea } from "@/components/ui/textarea";
 
 export function AddButton() {
   const [state, dispatch] = useFormState(AddCategory, null);
@@ -73,7 +74,7 @@ export function AddButton() {
               <Label htmlFor="username" className="text-right">
                 Description
               </Label>
-              <Input
+              <Textarea
                 name="description"
                 className="col-span-3"
                 placeholder="Description"

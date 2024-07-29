@@ -18,6 +18,7 @@ import { Loader2, Pencil } from "lucide-react";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { Textarea } from "@/components/ui/textarea";
 
 export function EditButton({
   id,
@@ -88,7 +89,7 @@ export function EditButton({
               <Label htmlFor="description" className="text-right">
                 Description
               </Label>
-              <Input
+              <Textarea
                 required
                 name="description"
                 defaultValue={description}

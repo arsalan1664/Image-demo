@@ -5,13 +5,18 @@ import {
   CommandGroup,
   CommandItem,
   CommandList,
-  CommandSeparator,
 } from "@/components/ui/command";
-import { Calculator, Calendar, Layers3, Smile, Tag } from "lucide-react";
+import { Layers3 } from "lucide-react";
 import { GetCategory } from "@/app/(Backend)/actions/category/getCategory";
 import { useRouter } from "next/navigation";
 
-function SearchDropDown({ query }: { query: string | null }) {
+function SearchDropDown({
+  query,
+  focus,
+}: {
+  query: string | null;
+  focus: boolean;
+}) {
   const router = useRouter();
   const [categories, setCategories] = useState<any[] | null>(null);
 
@@ -29,18 +34,19 @@ function SearchDropDown({ query }: { query: string | null }) {
   return (
     <CommandList
       className={
-        query
-          ? " absolute top-16 rounded-lg w-[90%] md:w-[93%] z-50 bg-background/90  text-left"
-          : "hidden"
+        focus
+          ? "absolute  top-12  rounded-lg w-[90%] md:w-[93%] z-40  dark:bg-secondary/30 backdrop-blur-xl text-left"
+          : "hidden "
       }
     >
       <CommandEmpty className="text-center p-2 hidden">
         No results found.
       </CommandEmpty>
       <CommandGroup heading="Categories">
-        {categories?.map((item) => (
+        {categories?.map((item, i) => (
           <CommandItem
             key={item.id}
+            className={i > 5 ? "hidden" : ""}
             onSelect={() => {
               console.log("first");
               router.push(`/c/${item.id}`);

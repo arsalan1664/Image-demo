@@ -1,17 +1,11 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Copy, Download, Facebook, Instagram, Twitter } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Download } from "lucide-react";
 import { db } from "@/lib/db";
 import BackButton from "./BackButton";
 import Image from "next/image";
 import { Metadata, ResolvingMetadata } from "next";
-import {
-  FacebookShareButton,
-  InstapaperShareButton,
-  TwitterShareButton,
-} from "react-share";
-import SocialButtons from "./SocialButtons";
+import { SocialButtons } from "./SocialButtons";
 
 // export async function generateStaticParams() {
 //   const Posts = await db.posts.findMany();

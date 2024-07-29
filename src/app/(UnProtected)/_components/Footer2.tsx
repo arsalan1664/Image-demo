@@ -1,19 +1,23 @@
+import GetName from "@/app/(Backend)/actions/websitename/getName";
 import React from "react";
+import NavbarImage from "./NavbarImage";
+import GetLogo from "@/app/(Backend)/actions/websitename/getLogo";
+import GetDarkLogo from "@/app/(Backend)/actions/websitename/getDarkLogo";
 
-function Footer2() {
+async function Footer2() {
+  const [name, logo, darkLogo] = await Promise.all([
+    GetName(),
+    GetLogo(),
+    GetDarkLogo(),
+  ]);
+
   return (
     <footer className="bg-background border-t border-border/40">
       <div className="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
-            {/* <Image
-              src="/logo.png"
-              width={20}
-              height={20}
-              className="mr-5 h-6 sm:h-9"
-              alt="logo"
-            /> */}
-            <h4>{process.env.WEBSITE_NAME}</h4>
+            <NavbarImage logo={logo} darkLogo={darkLogo} />
+            <h4>{name.success?.title}</h4>
 
             <div className="flex mt-8 space-x-6 text-gray-600">
               <a className="hover:opacity-75" target="_blank" rel="noreferrer">
@@ -132,7 +136,7 @@ function Footer2() {
       </div>
       <div className="bg-primary-foreground/30 py-4 text-center">
         <p className="text-xs text-muted-foreground">
-          © 2024 {process.env.WEBSITE_NAME} All rights reserved.
+          © 2024 {name.success?.title} All rights reserved.
         </p>
       </div>
     </footer>

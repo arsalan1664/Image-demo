@@ -12,12 +12,24 @@ export const metadata: Metadata = {
 
 const sidebarNavItems = [
   {
-    title: "Credentials",
-    href: "/panel/setting",
+    title: "WebsiteName & Logo",
+    href: "/panel/setting/websitename",
   },
   {
-    title: "Navlink",
+    title: "Navbar links",
     href: "/panel/setting/navlink",
+  },
+  {
+    title: "Herosection",
+    href: "/panel/setting/herosection",
+  },
+  {
+    title: "Homepage MetaTitle",
+    href: "/panel/setting/metatitle",
+  },
+  {
+    title: "Credentials 🔑",
+    href: "/panel/setting",
   },
 ];
 
@@ -34,7 +46,7 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
             <div>
               <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
               <p className="text-muted-foreground">
-                Manage your account settings and set e-mail preferences.
+                Manage your website settings.
               </p>
             </div>
             <div className="ml-auto">

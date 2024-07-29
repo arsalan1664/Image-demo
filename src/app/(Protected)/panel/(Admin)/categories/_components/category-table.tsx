@@ -1,3 +1,4 @@
+"use client";
 import {
   Table,
   TableBody,
@@ -9,20 +10,49 @@ import {
 import { ActionButton } from "./action-button";
 import { AddButton } from "./add-button";
 import Image from "next/image";
-import { GetCategory } from "@/app/(Backend)/actions/category/getCategory";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Loader2, Trash } from "lucide-react";
+import { BulkDeleteCategory } from "@/app/(Backend)/actions/category/bulkDeleteCategory";
+import { toast } from "sonner";
 
-export async function CategoryTable() {
-  const data = await GetCategory();
+export function CategoryTable({ data }: any) {
   let idCounter = 1;
+  const [checkedItems, setCheckedItems] = useState<string[]>([]);
+  const [Loader, setLoader] = useState<boolean>(false);
+
+  const handleCheckboxChange = (event: any) => {
+    const value = event.target.value;
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      setCheckedItems([...checkedItems, value]);
+    } else {
+      setCheckedItems(checkedItems.filter((item: any) => item !== value));
+    }
+  };
+  const handleBulkDelete = async () => {
+    setLoader(true);
+    const res = await BulkDeleteCategory(checkedItems);
+    if (res.success) {
+      setCheckedItems([]);
+      toast.success(res.success);
+    } else if (res.error) {
+      toast.error(res.error);
+    } else if (res.info) {
+      toast.info(res.info);
+    }
+    setLoader(false);
+  };
 
   return (
     <>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[90px]">Id</TableHead>
-            <TableHead className="w-[150px]">Cover Image</TableHead>
-            <TableHead className="w-[150px]">Title</TableHead>
+            <TableHead className="w-[10px]"></TableHead>
+            <TableHead className="w-[10px]">Id</TableHead>
+            <TableHead className="w-[130px]">Cover Image</TableHead>
+            <TableHead className="w-[110px]">Title</TableHead>
             <TableHead>Descriptions</TableHead>
             <TableHead className="text-center">Section</TableHead>
             <TableHead className="text-center">Number of Posts</TableHead>
@@ -32,6 +62,16 @@ export async function CategoryTable() {
         <TableBody>
           {data?.categories?.map((item: any) => (
             <TableRow key={item.id}>
+              <TableCell>
+                {
+                  <input
+                    type="checkbox"
+                    value={item.id}
+                    checked={checkedItems.includes(item.id)}
+                    onChange={handleCheckboxChange}
+                  />
+                }
+              </TableCell>
               <TableCell>{idCounter++}</TableCell>
               <TableCell>
                 <Image
@@ -70,6 +110,16 @@ export async function CategoryTable() {
         </TableBody>
       </Table>
       <AddButton />
+      {checkedItems.length !== 0 && (
+        <Button
+          onClick={handleBulkDelete}
+          size={"sm"}
+          variant={"destructive"}
+          className="w-14 h-14 fixed bottom-10 right-28 rounded-full "
+        >
+          {!Loader ? <Trash /> : <Loader2 className="animate-spin h-4 w-4 " />}
+        </Button>
+      )}
     </>
   );
 }

@@ -38,7 +38,11 @@ export async function GET(request: NextRequest) {
     // Assuming you have a 'db' object for database access.
     const sections = await db.sections.findMany({
       include: {
-        categories: true,
+        categories: {
+          include: {
+            posts: true,
+          },
+        },
       },
       orderBy: {
         createdAt: "asc",
