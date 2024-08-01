@@ -6,6 +6,7 @@ import BackButton from "./BackButton";
 import Image from "next/image";
 import { Metadata, ResolvingMetadata } from "next";
 import { SocialButtons } from "./SocialButtons";
+import InnerHtml from "@/lib/innerHtml";
 
 // export async function generateStaticParams() {
 //   const Posts = await db.posts.findMany();
@@ -68,9 +69,9 @@ async function Page({ params }: { params: any }) {
         <div className="grid gap-4 md:gap-10 items-start ">
           <div className="grid gap-2">
             <h1 className="font-bold text-3xl lg:text-4xl">{data?.title}</h1>
-            <p className="text-gray-500 dark:text-gray-400 mb-4 md:mb-8">
-              {data?.description}
-            </p>
+            <div className="text-gray-500 dark:text-gray-400 mb-4 md:mb-8">
+              <InnerHtml rawHTML={data?.description} />
+            </div>
 
             <div className="grid gap-4 mb-6">
               <div className=" h-auto max-w-[36rem] space-y-4">

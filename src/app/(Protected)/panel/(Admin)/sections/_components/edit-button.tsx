@@ -32,7 +32,7 @@ export function EditButton({
 }) {
   const [state, dispatch] = useFormState(EditSection, null);
   const [open, setOpen] = useState(false);
-  const [content, setContent] = useState<any>(`<p>${description}</p>`);
+  const [content, setContent] = useState<any>(description);
 
   const handleContentChange = (reason: any) => {
     setContent(reason);

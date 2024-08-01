@@ -14,6 +14,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import InnerHtml from "@/lib/innerHtml";
 import InnerHtmlClientWrapper from "@/lib/InnerHtmlClientDynamic";
+import ImageLinkCopyButton from "./ImageUrl";
 
 export default async function PhotoCard({ id }: { id: string }) {
   const data = await GetSinglePost({ id });

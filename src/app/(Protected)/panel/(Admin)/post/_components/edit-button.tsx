@@ -134,11 +134,11 @@ export function EditButton({ data }: { data: any }) {
 
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right">Upload</Label>
-              <Input required name="file" type="file" className="col-span-3" />
+              <Input name="file" type="file" className="col-span-3" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right">File Type</Label>
-              <Select required name="Filetype">
+              <Select required name="Filetype" defaultValue={data.filetype}>
                 <SelectTrigger className="w-[270px]">
                   <SelectValue placeholder="Select a file type" />
                 </SelectTrigger>

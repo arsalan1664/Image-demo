@@ -28,6 +28,10 @@ const sidebarNavItems = [
     href: "/panel/setting/metatitle",
   },
   {
+    title: "Script",
+    href: "/panel/setting/script",
+  },
+  {
     title: "Credentials 🔑",
     href: "/panel/setting",
   },

@@ -8,12 +8,14 @@ import {
   TwitterShareButton,
   LinkedinShareButton,
 } from "react-share";
+import ImageLinkCopyButton from "../../@modal/_component/ImageUrl";
 
 export function SocialButtons() {
   const pathname = usePathname();
   const FacebookUrl = process.env.NEXT_PUBLIC_URL_API + pathname;
   const LinkedinUrl = process.env.NEXT_PUBLIC_URL_API + pathname;
   const TwiterUrl = process.env.NEXT_PUBLIC_URL_API + pathname;
+  const CopyUrl = process.env.NEXT_PUBLIC_URL_API + pathname;
   return (
     <div className="space-x-4 flex items-center justify-center w-full mt-4">
       <FacebookShareButton url={FacebookUrl}>
@@ -25,6 +27,7 @@ export function SocialButtons() {
       <LinkedinShareButton url={LinkedinUrl}>
         <Linkedin />
       </LinkedinShareButton>
+      <ImageLinkCopyButton imageUrl={CopyUrl} />
     </div>
   );
 }
@@ -34,6 +37,7 @@ export function SocialButtons2() {
   const FacebookUrl = process.env.NEXT_PUBLIC_URL_API + pathname;
   const LinkedinUrl = process.env.NEXT_PUBLIC_URL_API + pathname;
   const TwiterUrl = process.env.NEXT_PUBLIC_URL_API + pathname;
+  const CopyUrl = process.env.NEXT_PUBLIC_URL_API + pathname;
   return (
     <div className="space-x-4 flex items-center justify-start w-full mt-4">
       <FacebookShareButton url={FacebookUrl}>
@@ -45,7 +49,7 @@ export function SocialButtons2() {
       <LinkedinShareButton url={LinkedinUrl}>
         <Linkedin />
       </LinkedinShareButton>
-      <Copy />
+      <ImageLinkCopyButton imageUrl={CopyUrl} />
     </div>
   );
 }

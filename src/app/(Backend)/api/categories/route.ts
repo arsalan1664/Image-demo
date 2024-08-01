@@ -258,19 +258,6 @@ export async function PUT(request: NextRequest) {
       },
     });
 
-    const existingTitle = await db.categories.findFirst({
-      where: {
-        title,
-      },
-    });
-
-    if (existingTitle) {
-      return NextResponse.json(
-        { info: "Category with this title already exists" },
-        { status: 200 }
-      );
-    }
-
     if (!existingItem) {
       return NextResponse.json({ info: "ID not matched" }, { status: 404 });
     }
