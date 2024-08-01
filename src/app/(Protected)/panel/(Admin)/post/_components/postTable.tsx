@@ -48,6 +48,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import dynamic from "next/dynamic";
 
 export type Type = {
   id: string;
@@ -144,9 +145,20 @@ export const columns: ColumnDef<Type>[] = [
   {
     accessorKey: "description",
     header: "Description",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("description")}</div>
-    ),
+    cell: ({ row }) => {
+      const DynamicHeader = dynamic(
+        () => import("../../../../../../lib/innerHtmlClient"),
+        {
+          ssr: false,
+          loading: () => <p>Loading...</p>,
+        }
+      );
+      return (
+        <div className="capitalize">
+          <DynamicHeader rawHTML={row.getValue("description")} />
+        </div>
+      );
+    },
   },
   {
     accessorKey: "category",

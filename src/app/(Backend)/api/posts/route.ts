@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
       description,
       category: { connect: { id: categoryId } },
       imageUrl: `/uploads/posts/${imageName}`, // Image URL path
-
+      filetype,
       postTags: {
         connectOrCreate: tagArry.map((tag) => ({
           where: { id: tag },

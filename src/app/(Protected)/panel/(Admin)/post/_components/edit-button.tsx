@@ -31,6 +31,7 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
+import TextEditor from "@/app/(Protected)/_components/TextEditor";
 
 export function EditButton({ data }: { data: any }) {
   const [state, dispatch] = useFormState(EditPost, null);
@@ -38,6 +39,10 @@ export function EditButton({ data }: { data: any }) {
   const [items, setItems] = useState<any[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
   const [open, setOpen] = useState(false);
+  const [content, setContent] = useState<string>(data?.description);
+  const handleContentChange = (reason: any) => {
+    setContent(reason);
+  };
   useEffect(() => {
     if (state?.error) {
       toast.error(`${state?.error}`);
@@ -108,10 +113,19 @@ export function EditButton({ data }: { data: any }) {
               <Textarea
                 required
                 name="description"
-                className="col-span-3"
+                className="col-span-3 hidden"
                 placeholder="Description"
-                defaultValue={data?.description}
+                value={content}
+                readOnly
               />
+              <div className="col-span-3">
+                <TextEditor
+                  content={content}
+                  onChange={(newContent: string) =>
+                    handleContentChange(newContent)
+                  }
+                />
+              </div>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right">Category</Label>

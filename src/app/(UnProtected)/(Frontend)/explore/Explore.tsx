@@ -1,3 +1,4 @@
+import InnerHtml from "@/lib/innerHtml";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -58,9 +59,9 @@ export default function Explore({ sections }: { sections: any }) {
                         <h3 className="text-lg font-semibold md:text-xl">
                           {catItem.title}
                         </h3>
-                        <p className="text-sm text-muted-foreground">
-                          {catItem.description}
-                        </p>
+                        <div className="text-sm text-muted-foreground">
+                          <InnerHtml rawHTML={catItem.description} />
+                        </div>
                       </div>
                     </div>
                   );

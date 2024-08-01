@@ -27,9 +27,14 @@ import {
 import { AddCategory } from "@/app/(Backend)/actions/category/addCategory";
 import { GetSection } from "@/app/(Backend)/actions/section/getSection";
 import { Textarea } from "@/components/ui/textarea";
+import TextEditor from "@/app/(Protected)/_components/TextEditor";
 
 export function AddButton() {
   const [state, dispatch] = useFormState(AddCategory, null);
+  const [content, setContent] = useState<string>("");
+  const handleContentChange = (reason: any) => {
+    setContent(reason);
+  };
   const [open, setOpen] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
@@ -76,9 +81,19 @@ export function AddButton() {
               </Label>
               <Textarea
                 name="description"
-                className="col-span-3"
+                className="col-span-3 hidden"
                 placeholder="Description"
+                value={content}
+                readOnly
               />
+              <div className="col-span-3">
+                <TextEditor
+                  content={content}
+                  onChange={(newContent: string) =>
+                    handleContentChange(newContent)
+                  }
+                />
+              </div>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right">Meta Title</Label>

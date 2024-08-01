@@ -28,6 +28,7 @@ import {
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { EditCategory } from "@/app/(Backend)/actions/category/editCategory";
 import { Textarea } from "@/components/ui/textarea";
+import TextEditor from "@/app/(Protected)/_components/TextEditor";
 
 export function EditButton({
   id,
@@ -46,6 +47,10 @@ export function EditButton({
 }) {
   const [state, dispatch] = useFormState(EditCategory, null);
   const formRef = useRef<HTMLFormElement>(null);
+  const [content, setContent] = useState<string>(description);
+  const handleContentChange = (reason: any) => {
+    setContent(reason);
+  };
   const [open, setOpen] = useState(false);
   useEffect(() => {
     if (state?.error) {
@@ -93,10 +98,19 @@ export function EditButton({
               </Label>
               <Textarea
                 name="description"
-                defaultValue={description}
-                className="col-span-3"
+                value={content}
+                className="col-span-3 hidden"
                 placeholder="Description"
+                readOnly
               />
+              <div className="col-span-3">
+                <TextEditor
+                  content={content}
+                  onChange={(newContent: string) =>
+                    handleContentChange(newContent)
+                  }
+                />
+              </div>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right">Meta Title</Label>

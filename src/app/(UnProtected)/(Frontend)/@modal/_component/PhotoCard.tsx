@@ -12,6 +12,8 @@ import {
   TagIcon,
 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import InnerHtml from "@/lib/innerHtml";
+import InnerHtmlClientWrapper from "@/lib/InnerHtmlClientDynamic";
 
 export default async function PhotoCard({ id }: { id: string }) {
   const data = await GetSinglePost({ id });
@@ -103,7 +105,9 @@ export default async function PhotoCard({ id }: { id: string }) {
         <div className="flex-1 w-full grid gap-8">
           <div>
             <h1 className="text-3xl font-bold">{data?.title}</h1>
-            <p className="text-muted-foreground mt-2">{data?.description}</p>
+            <div className="text-muted-foreground mt-2">
+              <InnerHtmlClientWrapper rawHTML={data?.description} />
+            </div>
           </div>
 
           <div className="flex flex-wrap gap-2">

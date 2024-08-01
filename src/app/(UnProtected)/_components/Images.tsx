@@ -1,5 +1,7 @@
 "use client";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import InnerHtmlClient from "@/lib/innerHtmlClient";
+import InnerHtmlClientWrapper from "@/lib/InnerHtmlClientDynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
@@ -116,7 +118,7 @@ function Images({ images, tags = [] }: { images: any; tags: any[] }) {
                     <div className="font-bold">{item.title}</div>
 
                     <div className="opacity-60 text-sm ">
-                      {item.description}
+                      <InnerHtmlClientWrapper rawHTML={item.description} />
                     </div>
                   </div>
                 </div>

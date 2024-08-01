@@ -15,8 +15,11 @@ import { Button } from "@/components/ui/button";
 import { Loader2, Trash } from "lucide-react";
 import { BulkDeleteCategory } from "@/app/(Backend)/actions/category/bulkDeleteCategory";
 import { toast } from "sonner";
+import InnerHtml from "@/lib/innerHtml";
+import InnerHtmlClient from "@/lib/innerHtmlClient";
+import dynamic from "next/dynamic";
 
-export function CategoryTable({ data }: any) {
+export function CategoryTable({ data, children }: any) {
   let idCounter = 1;
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [Loader, setLoader] = useState<boolean>(false);
@@ -43,6 +46,15 @@ export function CategoryTable({ data }: any) {
     }
     setLoader(false);
   };
+
+  const DynamicHeader = dynamic(
+    () => import("../../../../../../lib/innerHtmlClient"),
+    {
+      ssr: false,
+      loading: () => <p>Loading...</p>,
+      
+    }
+  );
 
   return (
     <>
@@ -83,7 +95,9 @@ export function CategoryTable({ data }: any) {
                 />
               </TableCell>
               <TableCell className="font-medium">{item.title}</TableCell>
-              <TableCell>{item.description}</TableCell>
+              <TableCell>
+                <DynamicHeader rawHTML={item?.description} />
+              </TableCell>
 
               <TableCell className="text-center">
                 {item.section?.title || "--"}

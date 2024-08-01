@@ -2,6 +2,7 @@ import Header from "@/app/(Protected)/_components/Header";
 import { CategoryTable } from "./_components/category-table";
 import { Metadata } from "next";
 import { GetCategory } from "@/app/(Backend)/actions/category/getCategory";
+import InnerHtml from "@/lib/innerHtml";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";

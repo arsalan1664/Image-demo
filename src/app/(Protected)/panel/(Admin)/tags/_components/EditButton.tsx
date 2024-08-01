@@ -1,5 +1,4 @@
 "use client";
-import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import React, { useState } from "react";
 import { useEditContext } from "./editContext";
@@ -13,12 +12,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Loader2, Trash, X } from "lucide-react";
-import MyButton from "./tagForm";
+import { Loader2, Trash } from "lucide-react";
 import { useCheckedItemsContext } from "./checkButton";
 import { BulkTagDelete } from "@/app/(Backend)/actions/tag/bulkTagDelete";
 import { toast } from "sonner";
-import loadConfig from "next/dist/server/config";
 
 function EditButton() {
   const { toggleEdit, isEditing } = useEditContext();

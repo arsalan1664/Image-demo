@@ -19,6 +19,7 @@ import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
+import TextEditor from "@/app/(Protected)/_components/TextEditor";
 
 export function EditButton({
   id,
@@ -31,6 +32,11 @@ export function EditButton({
 }) {
   const [state, dispatch] = useFormState(EditSection, null);
   const [open, setOpen] = useState(false);
+  const [content, setContent] = useState<any>(`<p>${description}</p>`);
+
+  const handleContentChange = (reason: any) => {
+    setContent(reason);
+  };
   const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
     if (state?.error) {
@@ -92,10 +98,19 @@ export function EditButton({
               <Textarea
                 required
                 name="description"
-                defaultValue={description}
-                className="col-span-3"
+                value={content}
+                className="col-span-3 hidden"
                 placeholder="Section Name"
+                readOnly
               />
+              <div className="col-span-3">
+                <TextEditor
+                  content={content}
+                  onChange={(newContent: string) =>
+                    handleContentChange(newContent)
+                  }
+                />
+              </div>
             </div>
           </div>
           <DialogFooter>

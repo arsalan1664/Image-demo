@@ -17,10 +17,15 @@ import { AddSection } from "@/app/(Backend)/actions/section/addSection";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
+import TextEditor from "@/app/(Protected)/_components/TextEditor";
 
 export function AddButton() {
   const [state, dispatch] = useFormState(AddSection, null);
   const [open, setOpen] = useState(false);
+  const [content, setContent] = useState<string>("");
+  const handleContentChange = (reason: any) => {
+    setContent(reason);
+  };
 
   const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
@@ -78,10 +83,20 @@ export function AddButton() {
               </Label>
               <Textarea
                 required
+                value={content}
                 name="description"
-                className="col-span-3"
+                className="col-span-3 hidden"
                 placeholder="Description"
+                readOnly
               />
+              <div className="col-span-3">
+                <TextEditor
+                  content={content}
+                  onChange={(newContent: string) =>
+                    handleContentChange(newContent)
+                  }
+                />
+              </div>
             </div>
           </div>
           <DialogFooter>

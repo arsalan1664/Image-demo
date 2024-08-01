@@ -1,5 +1,5 @@
 "use client";
-import { Twitter, Facebook, Linkedin } from "lucide-react";
+import { Twitter, Facebook, Linkedin, Copy } from "lucide-react";
 import { usePathname } from "next/navigation";
 import React from "react";
 
@@ -45,6 +45,7 @@ export function SocialButtons2() {
       <LinkedinShareButton url={LinkedinUrl}>
         <Linkedin />
       </LinkedinShareButton>
+      <Copy />
     </div>
   );
 }

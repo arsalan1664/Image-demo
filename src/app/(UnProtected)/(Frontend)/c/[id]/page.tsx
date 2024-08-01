@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import Images from "../../../_components/Images";
 import Image from "next/image";
 import { Metadata, ResolvingMetadata } from "next";
+import InnerHtml from "@/lib/innerHtml";
 
 export async function generateMetadata(
   { params }: { params: { id: string } },
@@ -66,7 +67,11 @@ export default async function Category({ params }: { params: { id: string } }) {
         />
         <div className="absolute bottom-0 top-18 left-0 right-0 bg-black bg-opacity-50 p-20">
           <h1 className="text-4xl font-bold text-white">{categories?.title}</h1>
-          <p className="mt-2 text-lg text-white">{categories?.description}</p>
+
+          <div className="mt-2 text-lg text-white">
+            {" "}
+            <InnerHtml rawHTML={categories?.description} />
+          </div>
         </div>
       </div>
 

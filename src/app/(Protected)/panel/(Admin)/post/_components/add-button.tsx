@@ -29,6 +29,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
+import TextEditor from "@/app/(Protected)/_components/TextEditor";
 
 type itemsTypes = {
   id: string;
@@ -38,6 +39,10 @@ type itemsTypes = {
 export function AddButton() {
   const [state, dispatch] = useFormState(AddPost, null);
   const [open, setOpen] = useState(false);
+  const [content, setContent] = useState<string>("");
+  const handleContentChange = (reason: any) => {
+    setContent(reason);
+  };
   const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
     if (state?.error) {
@@ -102,9 +107,19 @@ export function AddButton() {
               <Textarea
                 required
                 name="description"
-                className="col-span-3"
+                className="col-span-3 hidden"
                 placeholder="Description"
+                value={content}
+                readOnly
               />
+              <div className="col-span-3">
+                <TextEditor
+                  content={content}
+                  onChange={(newContent: string) =>
+                    handleContentChange(newContent)
+                  }
+                />
+              </div>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right">Category</Label>

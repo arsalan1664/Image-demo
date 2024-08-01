@@ -9,6 +9,7 @@ import {
 import { ActionButton } from "./action-button";
 import { AddButton } from "./add-button";
 import { GetSection } from "@/app/(Backend)/actions/section/getSection";
+import InnerHtml from "@/lib/innerHtml";
 
 export async function SectionTable() {
   const data = await GetSection();
@@ -31,7 +32,8 @@ export async function SectionTable() {
               <TableCell>{Idcounter++}</TableCell>
               <TableCell className="font-medium">{item.title}</TableCell>
               <TableCell className="text-muted-foreground">
-                {item.description}
+                <InnerHtml rawHTML={item.description} />
+                {/* {item.description} */}
               </TableCell>
               <TableCell className="text-center">
                 {item.categories.length}
