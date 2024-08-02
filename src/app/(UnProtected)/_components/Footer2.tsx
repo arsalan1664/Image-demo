@@ -3,6 +3,7 @@ import React from "react";
 import NavbarImage from "./NavbarImage";
 import GetLogo from "@/app/(Backend)/actions/websitename/getLogo";
 import GetDarkLogo from "@/app/(Backend)/actions/websitename/getDarkLogo";
+import Link from "next/link";
 
 async function Footer2() {
   const [name, logo, darkLogo] = await Promise.all([
@@ -93,7 +94,7 @@ async function Footer2() {
               </a>
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-2 lg:grid-cols-3">
             <div>
               <p className="font-medium">Most Popular</p>
               <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
@@ -103,7 +104,7 @@ async function Footer2() {
                 <a className="hover:opacity-75"> Careers </a>
               </nav>
             </div>
-            <div>
+            {/* <div>
               <p className="font-medium">Category</p>
               <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
                 <a className="hover:opacity-75"> 1on1 Coaching </a>
@@ -112,7 +113,7 @@ async function Footer2() {
                 <a className="hover:opacity-75"> HR Consulting </a>
                 <a className="hover:opacity-75"> SEO Optimisation </a>
               </nav>
-            </div>
+            </div> */}
             <div>
               <p className="font-medium">Helpful Links</p>
               <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
@@ -124,10 +125,18 @@ async function Footer2() {
             <div>
               <p className="font-medium">Legal</p>
               <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                <a className="hover:opacity-75"> Privacy Policy </a>
-                <a className="hover:opacity-75"> Terms &amp; Conditions </a>
-                <a className="hover:opacity-75"> Returns Policy </a>
-                <a className="hover:opacity-75"> Accessibility </a>
+                <Link href={"/privacy-policy"} className="hover:opacity-75">
+                  {" "}
+                  Privacy Policy{" "}
+                </Link>
+                <Link href={"/terms"} className="hover:opacity-75">
+                  {" "}
+                  Terms &amp; Conditions{" "}
+                </Link>
+                <Link href={"/disclaimer"} className="hover:opacity-75">
+                  {" "}
+                  Disclaimer{" "}
+                </Link>
               </nav>
             </div>
           </div>

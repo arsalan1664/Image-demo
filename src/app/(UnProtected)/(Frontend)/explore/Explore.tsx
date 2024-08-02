@@ -30,9 +30,9 @@ export default function Explore({ sections }: { sections: any }) {
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
                   {item.title}
                 </h2>
-                <p className="text-muted-foreground md:text-lg">
-                  {item.description}
-                </p>
+                <div className="text-muted-foreground md:text-lg">
+                  <InnerHtml rawHTML={item.description} />
+                </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mx-auto">
                 {item.categories.map((catItem: any, i: any) => {
