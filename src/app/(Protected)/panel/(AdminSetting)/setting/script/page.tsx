@@ -47,10 +47,10 @@ function InputWithLabel() {
     const res = await DeleteScript(id);
     setPendingdelete(false);
     if (res?.success) {
-      toast.success(res.success);
+      toast.success(res.message);
       fetchData();
     } else if (res?.error) {
-      toast.success(res.error);
+      toast.success(res.message);
     }
   };
 
@@ -88,8 +88,9 @@ function InputWithLabel() {
             Script
           </Label>
           <Textarea
+            className="h-32"
             name="script"
-            placeholder="Enter Meta Description"
+            placeholder="Enter Script"
             required
           />
         </div>
@@ -99,7 +100,7 @@ function InputWithLabel() {
         </div>
       </form>
       <div className="mt-4 grid grid-cols-4 md:grid-cols-6 gap-2">
-        {response.map((item: any) => (
+        {response?.map((item: any) => (
           <Badge
             key={item.id}
             className="cursor-pointer p-2 pl-4 relative group "

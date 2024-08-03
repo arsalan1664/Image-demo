@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { revalidatePath } from "next/cache";
 
 export async function AddScript(state: any, formData: FormData) {
   try {
@@ -15,7 +16,7 @@ export async function AddScript(state: any, formData: FormData) {
 
     if (existingItem) {
       console.log(existingItem);
-      return { info: true, message: "Navlink Already Exists" };
+      return { info: true, message: "Script Already Exists" };
     }
 
     await db.script.create({
@@ -25,7 +26,7 @@ export async function AddScript(state: any, formData: FormData) {
 
     return {
       success: true,
-      message: "Added Navlink successfully",
+      message: "Added Script successfully",
       fieldValues,
     };
   } catch (error) {
@@ -33,18 +34,14 @@ export async function AddScript(state: any, formData: FormData) {
   }
 }
 
-export async function GetScript() {
+export const GetScript = async () => {
   try {
     const res = await db.script.findMany();
-    return {
-      success: res,
-    };
+    return { success: res };
   } catch (error) {
-    return {
-      error: error,
-    };
+    return { error };
   }
-}
+};
 
 export async function DeleteScript(id: string) {
   try {
@@ -62,7 +59,7 @@ export async function DeleteScript(id: string) {
       });
 
       const fieldValues = { title: "", description: "" };
-
+      revalidatePath("/", "layout");
       return {
         success: true,
         message: "Deleted script successfully",

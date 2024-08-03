@@ -4,12 +4,18 @@ import NavbarImage from "./NavbarImage";
 import GetLogo from "@/app/(Backend)/actions/websitename/getLogo";
 import GetDarkLogo from "@/app/(Backend)/actions/websitename/getDarkLogo";
 import Link from "next/link";
+import { db } from "@/lib/db";
 
 async function Footer2() {
-  const [name, logo, darkLogo] = await Promise.all([
+  const GettheCategories = async () => {
+    return await db.categories.findMany({ take: 3 });
+  };
+
+  const [name, logo, darkLogo, categories] = await Promise.all([
     GetName(),
     GetLogo(),
     GetDarkLogo(),
+    GettheCategories(),
   ]);
 
   return (
@@ -18,10 +24,10 @@ async function Footer2() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
             <NavbarImage logo={logo} darkLogo={darkLogo} />
-            <h4>{name.success?.title}</h4>
+            <h4 className="mt-2">{name.success?.title}</h4>
 
-            <div className="flex mt-8 space-x-6 text-gray-600">
-              <a className="hover:opacity-75" target="_blank" rel="noreferrer">
+            {/* <div className="flex mt-8 space-x-6 text-gray-600">
+              <a className="hover:text-foreground" target="_blank" rel="noreferrer">
                 <span className="sr-only"> Facebook </span>
                 <svg
                   className="w-6 h-6"
@@ -36,7 +42,7 @@ async function Footer2() {
                   />
                 </svg>
               </a>
-              <a className="hover:opacity-75" target="_blank" rel="noreferrer">
+              <a className="hover:text-foreground" target="_blank" rel="noreferrer">
                 <span className="sr-only"> Instagram </span>
                 <svg
                   className="w-6 h-6"
@@ -51,7 +57,7 @@ async function Footer2() {
                   />
                 </svg>
               </a>
-              <a className="hover:opacity-75" target="_blank" rel="noreferrer">
+              <a className="hover:text-foreground" target="_blank" rel="noreferrer">
                 <span className="sr-only"> Twitter </span>
                 <svg
                   className="w-6 h-6"
@@ -62,7 +68,7 @@ async function Footer2() {
                   <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                 </svg>
               </a>
-              <a className="hover:opacity-75" target="_blank" rel="noreferrer">
+              <a className="hover:text-foreground" target="_blank" rel="noreferrer">
                 <span className="sr-only"> GitHub </span>
                 <svg
                   className="w-6 h-6"
@@ -77,7 +83,7 @@ async function Footer2() {
                   />
                 </svg>
               </a>
-              <a className="hover:opacity-75" target="_blank" rel="noreferrer">
+              <a className="hover:text-foreground" target="_blank" rel="noreferrer">
                 <span className="sr-only"> Dribbble </span>
                 <svg
                   className="w-6 h-6"
@@ -92,48 +98,53 @@ async function Footer2() {
                   />
                 </svg>
               </a>
-            </div>
+            </div> */}
           </div>
           <div className="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-2 lg:grid-cols-3">
             <div>
               <p className="font-medium">Most Popular</p>
-              <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                <a className="hover:opacity-75"> About </a>
-                <a className="hover:opacity-75"> Meet the Team </a>
-                <a className="hover:opacity-75"> History </a>
-                <a className="hover:opacity-75"> Careers </a>
+              <nav className="flex flex-col mt-4 space-y-2 text-sm text-foreground/80">
+                {categories?.map((i) => {
+                  return (
+                    <Link
+                      key={i.id}
+                      href={"/c/" + i.id}
+                      className="hover:text-foreground"
+                    >
+                      {i.title}
+                    </Link>
+                  );
+                })}
               </nav>
             </div>
-            {/* <div>
-              <p className="font-medium">Category</p>
-              <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                <a className="hover:opacity-75"> 1on1 Coaching </a>
-                <a className="hover:opacity-75"> Company Review </a>
-                <a className="hover:opacity-75"> Accounts Review </a>
-                <a className="hover:opacity-75"> HR Consulting </a>
-                <a className="hover:opacity-75"> SEO Optimisation </a>
-              </nav>
-            </div> */}
             <div>
               <p className="font-medium">Helpful Links</p>
-              <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                <a className="hover:opacity-75"> Contact </a>
-                <a className="hover:opacity-75"> FAQs </a>
-                <a className="hover:opacity-75"> Live Chat </a>
+              <nav className="flex flex-col mt-4 space-y-2 text-sm text-foreground/70">
+                <Link href={"/contact"} className="hover:text-foreground">
+                  {" "}
+                  Contact{" "}
+                </Link>
+                <Link href={"/about"} className="hover:text-foreground">
+                  {" "}
+                  About{" "}
+                </Link>
               </nav>
             </div>
             <div>
               <p className="font-medium">Legal</p>
-              <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                <Link href={"/privacy-policy"} className="hover:opacity-75">
+              <nav className="flex flex-col mt-4 space-y-2 text-sm text-foreground/80">
+                <Link
+                  href={"/privacy-policy"}
+                  className="hover:text-foreground"
+                >
                   {" "}
                   Privacy Policy{" "}
                 </Link>
-                <Link href={"/terms"} className="hover:opacity-75">
+                <Link href={"/terms"} className="hover:text-foreground">
                   {" "}
                   Terms &amp; Conditions{" "}
                 </Link>
-                <Link href={"/disclaimer"} className="hover:opacity-75">
+                <Link href={"/disclaimer"} className="hover:text-foreground">
                   {" "}
                   Disclaimer{" "}
                 </Link>

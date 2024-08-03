@@ -26,7 +26,6 @@ function Animated_Search() {
           <div className="relative px-4 bg-slate-100 dark:bg-zinc-950  rounded-full leading-none flex items-center md:min-w-96">
             <Command className="bg-slate-100 dark:bg-zinc-950  text-foreground/80 ">
               <CommandInput
-               
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)}
                 inputMode="search"
@@ -43,7 +42,12 @@ function Animated_Search() {
             {isLoading ? (
               <Loader2 className="animate-spin text-foreground/40  ml-auto" />
             ) : (
-              <Button onClick={handleSubmit} size={"icon"} variant={"ghost"}>
+              <Button
+                aria-label="Search"
+                onClick={handleSubmit}
+                size={"icon"}
+                variant={"ghost"}
+              >
                 <ArrowBigRight className=" text-foreground/40 hover:text-foreground/40" />
               </Button>
             )}

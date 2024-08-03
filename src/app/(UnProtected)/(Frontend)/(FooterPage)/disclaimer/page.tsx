@@ -2,14 +2,14 @@ import React from "react";
 
 function Page() {
   return (
-    <div className="w-full max-w-4xl mx-auto min-h-[90vh] flex items-center justify-center py-20 md:py-24 px-4 md:px-6">
+    <div className="w-full max-w-4xl mx-auto min-h-[90vh] flex items-center justify-center py-16 md:py-32 px-4 md:px-6">
       <div className="space-y-12">
         <section>
           <h2 className="text-3xl font-bold mb-4">Disclaimer</h2>
           <div className="space-y-6 text-muted-foreground">
             <p>
               The information and materials contained on this website are
-              provided "as is" without warranties of any kind, either express or
+              provided as is without warranties of any kind, either express or
               implied. We disclaim all warranties, express or implied, including
               but not limited to implied warranties of merchantability and
               fitness for a particular purpose.

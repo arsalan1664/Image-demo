@@ -5,7 +5,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -56,14 +56,6 @@ model Categories {
   posts           Posts[]
 }
 
-model Script {
-  id        String   @id @default(uuid())
-  title     String
-  script    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 model User {
   id           String   @id @default(uuid())
   username     String   @unique
@@ -112,4 +104,12 @@ model HeroSection {
   id    Int    @id @default(autoincrement())
   title String
   desc  String
+}
+
+model Script {
+  id        String   @id @default(uuid())
+  title     String
+  script    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

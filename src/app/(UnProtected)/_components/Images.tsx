@@ -61,23 +61,9 @@ function Images({ images, tags = [] }: { images: any; tags: any[] }) {
 
   return (
     <>
-      <div className="mx-8 mt-4  bg-card p-6 rounded-lg shadow-sm">
-        <h2 className="text-2xl font-bold mb-4">Filter by type</h2>
-        {/* <div className="flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <button
-              key={tag.id}
-              onClick={() => handleTagClick(tag.id)}
-              className={`px-3 py-1 rounded-full transition-colors ${
-                selectedTags.includes(tag.id)
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-muted text-muted-foreground hover:bg-muted/80"
-              }`}
-            >
-              {tag.title}
-            </button>
-          ))}
-        </div> */}
+      <div className="mx-8 mt-6 md:mt-10  bg-card pl-[-20px] sm:pl-4 md:pl-6  rounded-lg shadow-sm">
+        <h2 className="text-lg md:text:2xl font-bold mb-4">Filter by type</h2>
+
         <div className="flex flex-wrap gap-2">
           <ToggleGroup
             variant="outline"

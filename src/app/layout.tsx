@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import GetName from "./(Backend)/actions/websitename/getName";
+import { GetScript } from "./(Backend)/actions/script/ScriptAction";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,13 +20,28 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const res = await GetScript();
+  if (res.error) {
+    console.log(res.error);
+    return;
+  }
+  const script = res?.success;
   return (
     <html lang="en">
+      <head>
+        {script?.map((i: any) => {
+          const code = i.script;
+          return (
+            <script key={i.id} dangerouslySetInnerHTML={{ __html: code }} />
+          );
+        })}
+      </head>
+
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"

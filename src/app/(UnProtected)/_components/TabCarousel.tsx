@@ -18,7 +18,7 @@ export async function TabCarousel() {
         opts={{
           align: "center",
         }}
-        className="max-w-screen-lg mx-auto my-2"
+        className="max-w-[230px] sm:max-w-[400px] md:max-w-lg lg:max-w-[900px] xl:max-w-screen-lg mx-auto py-1 sm:py-2 "
       >
         <CarouselContent>
           {categories?.map((item: any) => (
@@ -26,9 +26,11 @@ export async function TabCarousel() {
               <div className="">
                 <Link
                   href={`/c/${item.id}`}
-                  className="flex items-center  border hover:border-purple-600 px-3 py-1 rounded-full"
+                  className="flex items-center  border hover:border-purple-600 px-3 py-1 bg-background dark:bg-muted rounded-full"
                 >
-                  <span className="text-center mx-auto">{item.title}</span>
+                  <span className="text-center mx-auto text-xs sm:text-sm">
+                    {item.title}
+                  </span>
                 </Link>
               </div>
             </CarouselItem>

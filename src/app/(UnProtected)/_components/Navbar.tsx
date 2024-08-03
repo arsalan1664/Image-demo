@@ -51,7 +51,7 @@ const Navbar = async () => {
         <div className="flex md:hidden items-center gap-5 text-muted-foreground text-sm">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant={"outline"} size={"sm"}>
+              <Button aria-label="dropdown" variant={"outline"} size={"sm"}>
                 <AlignJustify size={16} />
               </Button>
             </DropdownMenuTrigger>

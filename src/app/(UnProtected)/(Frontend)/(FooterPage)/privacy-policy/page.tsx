@@ -1,6 +1,8 @@
+import React from "react";
+
 export default function Component() {
   return (
-    <div className="flex items-center justify-center min-h-[90vh] w-full max-w-4xl mx-auto py-12 md:py-20 px-4 md:px-6">
+    <div className="flex items-center justify-center min-h-[90vh] w-full max-w-4xl mx-auto py-16 md:py-32 px-4 md:px-6">
       <div className="space-y-12">
         <section>
           <h2 className="text-3xl font-bold mb-4">Privacy Policy</h2>
