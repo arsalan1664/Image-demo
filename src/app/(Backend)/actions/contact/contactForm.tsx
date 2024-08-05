@@ -5,29 +5,44 @@ export default async function ContactForm(state: any, formData: FormData) {
   try {
     const name = formData.get("name");
     const email = formData.get("email");
+    const phone = formData.get("phone");
+    const subject = formData.get("subject");
     const message = formData.get("message");
 
+    // const transporter = nodemailer.createTransport({
+    //   host: "s1384.syd1.mysecurecloudhost.com:2096",
+    //   port: 465,
+    //   secure: false, // true for 465, false for other ports
+    //   auth: {
+    //     user: "support@imagewebsite.eduresearchers.com", // your SMTP username
+    //     pass: "o-%_m71U!?mD", // your SMTP password
+    //   },
+    // });
+
     const transporter = nodemailer.createTransport({
-      host: "business76.web-hosting.com",
-      port: 587,
-      secure: false, // true for 465, false for other ports
+      host: "s1384.syd1.mysecurecloudhost.com",
+      port: 587, // Use the appropriate port for your SMTP server
+      secure: false, // Set to true if your server requires a secure connection
       auth: {
-        user: "support@webnike.com", // your SMTP username
-        pass: "ch.lF$}deEjC", // your SMTP password
+        // port:
+        user: "support@imagewebsite.eduresearchers.com",
+        pass: "o-%_m71U!?mD",
       },
     });
 
     let mailOptions = {
-      from: "support@webnike.com",
-      to: "support@webnike.com",
+      from: "support@gogrades.org",
+      to: "support@imagewebsite.eduresearchers.com",
       subject: "Contact Us Form",
-      text: "Hello world?",
+      text: "Contact Us Form",
       html: `
                 <div style="font-family: Arial, sans-serif; line-height: 1.6;">
                     <p><b>Details:</b></p>
                     <ul>
                         <li><b>Name:</b> ${name}</li>
                         <li><b>Email:</b> ${email}</li>
+                        <li><b>Phone:</b> ${phone}</li>
+                        <li><b>Subject:</b> ${subject}</li>
                         <li><b>Message:</b> ${message}</li>
                     </ul>
                 </div>
@@ -36,7 +51,8 @@ export default async function ContactForm(state: any, formData: FormData) {
 
     transporter.sendMail(mailOptions, (error: any, info: any) => {
       if (error) {
-        return console.log(error);
+        console.log(error);
+        return { error: "Something Went Wrong" };
       }
       console.log("Message sent: %s", info.messageId);
       console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));

@@ -8,22 +8,20 @@ export default async function AddDarkLogo(state: any, formData: FormData) {
   try {
     const logo = formData.get("logo") as any;
 
-    if (!logo) {
-      throw new Error("Logo file is missing");
-    }
-
     const existingLogo = await db.websiteDarkLogo.findFirst();
 
     if (existingLogo) {
+      await fs.unlink(existingLogo.logosrc);
+
       const dirPath = `public/uploads/logo/`;
       await fs.mkdir(dirPath, { recursive: true });
       await fs.writeFile(`${dirPath}${logo.name}`, logo.stream());
       const logosrc = dirPath + logo.name;
+
       await db.websiteDarkLogo.update({
         where: { id: existingLogo.id },
         data: { logosrc },
       });
-      await fs.unlink(existingLogo.logosrc);
     } else {
       const dirPath = `public/uploads/logo/`;
       await fs.mkdir(dirPath, { recursive: true });

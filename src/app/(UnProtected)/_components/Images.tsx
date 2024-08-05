@@ -11,53 +11,21 @@ type typeValue = "all" | "image" | "video" | "gifs" | "phrases";
 function Images({ images, tags = [] }: { images: any; tags: any[] }) {
   const [value, setValue] = useState<typeValue | string>("all");
   const router = useRouter();
-  // const [selectedTags, setSelectedTags] = useState<any[]>([]);
-
+  console.log(images);
   const filteredContent = useMemo(() => {
     if (value === "all") {
       return images.posts;
     } else if (value === "image") {
-      return images.posts.filter((post: any) => post.filetype === "images");
+      return images.posts.filter((post: any) => post.filetype === "Image");
     } else if (value === "video") {
       return images.posts.filter((post: any) => post.filetype === "Video");
     } else if (value === "gifs") {
-      return images.posts.filter((post: any) => post.filetype === "gif");
+      return images.posts.filter((post: any) => post.filetype === "Gif");
     } else if (value === "phrases") {
-      return images.posts.filter((post: any) => post.filetype === "phraes");
+      return images.posts.filter((post: any) => post.filetype === "Phrases");
     }
     return images.posts;
-    // return images.posts.map((i: any) => {
-    //   console.log(i);
-    //   return i.postTags.filter((item: any) =>
-    //     selectedTags.every((tag) => item.tags.includes(tag))
-    //   );
-    // });
   }, [images, value]);
-
-  // const filteredContent = useMemo(() => {
-  //   if (selectedTags.length === 0) {
-  //     return images;
-  //   }
-  //   // return images.posts.postTags.filter((item: any) =>
-  //   //   selectedTags.every((tag) => item.tags.includes(tag))
-  //   // );
-
-  //   return images.posts.map((i: any) => {
-  //     console.log(i);
-  //     return i.postTags.filter((item: any) =>
-  //       selectedTags.every((tag) => item.tags.includes(tag))
-  //     );
-  //   });
-  // }, [selectedTags, images]);
-
-  // const handleTagClick = (tag: any) => {
-  //   console.log(tag);
-  //   if (selectedTags.includes(tag)) {
-  //     setSelectedTags(selectedTags.filter((t) => t !== tag));
-  //   } else {
-  //     setSelectedTags([...selectedTags, tag]);
-  //   }
-  // };
 
   return (
     <>

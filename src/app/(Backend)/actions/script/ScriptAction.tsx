@@ -43,6 +43,16 @@ export const GetScript = async () => {
   }
 };
 
+export const GetSingleScript = async () => {
+  try {
+    const res = await db.script.findFirst();
+    if (!res) return { error: "asdd" };
+    return { success: res };
+  } catch (error) {
+    return { error };
+  }
+};
+
 export async function DeleteScript(id: string) {
   try {
     const existingItem = await db.script.findFirst({

@@ -1,24 +1,29 @@
 import React from "react";
 import Navbar from "../_components/Navbar";
 import Footer2 from "../_components/Footer2";
+import { GetScript } from "@/app/(Backend)/actions/script/ScriptAction";
+import Script from "next/script";
 
-
-
-
-function layout({
+async function layout({
   children,
   modal,
 }: {
   children: React.ReactNode;
   modal: React.ReactNode;
 }) {
+  const res = await GetScript();
   return (
-    <div>
+    <>
+      {res.success?.map((i: any) => {
+        const code = i.script;
+        return <Script key={i.id} dangerouslySetInnerHTML={{ __html: code }} />;
+      })}
+      ;
       <Navbar />
       {children}
       <Footer2 />
       {modal}
-    </div>
+    </>
   );
 }
 

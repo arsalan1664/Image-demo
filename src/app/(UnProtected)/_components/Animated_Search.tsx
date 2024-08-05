@@ -27,13 +27,12 @@ function Animated_Search() {
             <Command className="bg-slate-100 dark:bg-zinc-950  text-foreground/80 ">
               <CommandInput
                 onFocus={() => setFocus(true)}
-                onBlur={() => setFocus(false)}
                 inputMode="search"
                 value={value}
                 onValueChange={(search: string) => setValue(search)}
                 placeholder="Search by Category"
               />
-              <SearchDropDown query={query} focus={focus} />
+              <SearchDropDown query={query} focus={focus} setFocus={setFocus} />
             </Command>
 
             {!query && value && (

@@ -15,14 +15,24 @@ import { Button } from "@/components/ui/button";
 import { Loader2, Trash } from "lucide-react";
 import { BulkDeleteCategory } from "@/app/(Backend)/actions/category/bulkDeleteCategory";
 import { toast } from "sonner";
-import InnerHtml from "@/lib/innerHtml";
-import InnerHtmlClient from "@/lib/innerHtmlClient";
 import dynamic from "next/dynamic";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
+import { Input } from "postcss";
 
 export function CategoryTable({ data, children }: any) {
   let idCounter = 1;
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [Loader, setLoader] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
 
   const handleCheckboxChange = (event: any) => {
     const value = event.target.value;
@@ -52,7 +62,6 @@ export function CategoryTable({ data, children }: any) {
     {
       ssr: false,
       loading: () => <p>Loading...</p>,
-      
     }
   );
 
@@ -125,14 +134,43 @@ export function CategoryTable({ data, children }: any) {
       </Table>
       <AddButton />
       {checkedItems.length !== 0 && (
-        <Button
-          onClick={handleBulkDelete}
-          size={"sm"}
-          variant={"destructive"}
-          className="w-14 h-14 fixed bottom-10 right-28 rounded-full "
-        >
-          {!Loader ? <Trash /> : <Loader2 className="animate-spin h-4 w-4 " />}
-        </Button>
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger className="w-full">
+            <Button
+              size={"sm"}
+              variant={"destructive"}
+              className="w-14 h-14 fixed bottom-10 right-28 rounded-full "
+            >
+              {!Loader ? (
+                <Trash />
+              ) : (
+                <Loader2 className="animate-spin h-4 w-4 " />
+              )}
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Are you absolutely sure?</DialogTitle>
+              <DialogDescription>
+                This action cannot be undone. Are you sure you want to
+                permanently delete this file from our servers?
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              {" "}
+              <Button onClick={handleBulkDelete} disabled={Loader}>
+                {!Loader ? (
+                  "Delete"
+                ) : (
+                  <>
+                    <Loader2 className="animate-spin h-4 w-4 " />
+                    Loading..
+                  </>
+                )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       )}
     </>
   );

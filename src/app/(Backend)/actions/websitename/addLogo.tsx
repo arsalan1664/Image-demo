@@ -15,6 +15,8 @@ export default async function AddLogo(state: any, formData: FormData) {
     const existingLogo = await db.websiteLogo.findFirst();
 
     if (existingLogo) {
+      await fs.unlink(existingLogo.logosrc);
+
       const dirPath = `public/uploads/logo/`;
       await fs.mkdir(dirPath, { recursive: true });
       await fs.writeFile(`${dirPath}${logo.name}`, logo.stream());
@@ -23,7 +25,6 @@ export default async function AddLogo(state: any, formData: FormData) {
         where: { id: existingLogo.id },
         data: { logosrc },
       });
-      await fs.unlink(existingLogo.logosrc);
     } else {
       const dirPath = `public/uploads/logo/`;
       await fs.mkdir(dirPath, { recursive: true });

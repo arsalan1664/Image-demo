@@ -88,7 +88,7 @@ function InputWithLabel() {
             Script
           </Label>
           <Textarea
-            className="h-32"
+            className="min-h-50"
             name="script"
             placeholder="Enter Script"
             required

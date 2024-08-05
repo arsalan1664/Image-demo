@@ -3,7 +3,6 @@ import { Form, Loop } from "./_components/tagForm";
 import Header from "@/app/(Protected)/_components/Header";
 import { Metadata } from "next";
 import EditProvider from "./_components/editContext";
-import { Switch } from "@/components/ui/switch";
 import EditButton from "./_components/EditButton";
 import CheckedItemsProvider from "./_components/checkButton";
 

@@ -6,16 +6,19 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Layers3 } from "lucide-react";
+import { Layers3, X } from "lucide-react";
 import { GetCategory } from "@/app/(Backend)/actions/category/getCategory";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 function SearchDropDown({
   query,
   focus,
+  setFocus,
 }: {
   query: string | null;
   focus: boolean;
+  setFocus: any;
 }) {
   const router = useRouter();
   const [categories, setCategories] = useState<any[] | null>(null);
@@ -42,7 +45,22 @@ function SearchDropDown({
       <CommandEmpty className="text-center p-2 hidden">
         No results found.
       </CommandEmpty>
-      <CommandGroup heading="Categories">
+
+      <CommandGroup
+        heading={
+          <div className="flex items-center justify-between px-3 ">
+            Categories
+            <Button
+              onClick={() => setFocus(false)}
+              className="dark:bg-red-700/50 bg-red-300/70 text-foreground"
+              variant={"ghost"}
+              size={"xs"}
+            >
+              <X className="h-3 w-3 " />
+            </Button>
+          </div>
+        }
+      >
         {categories?.map((item, i) => (
           <CommandItem
             key={item.id}
