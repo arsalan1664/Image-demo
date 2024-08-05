@@ -1,12 +1,13 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { Download, DownloadIcon, TagIcon } from "lucide-react";
 import { db } from "@/lib/db";
 import BackButton from "./BackButton";
 import Image from "next/image";
 import { Metadata, ResolvingMetadata } from "next";
-import { SocialButtons } from "./SocialButtons";
+import { SocialButtons, SocialButtons2 } from "./SocialButtons";
 import InnerHtml from "@/lib/innerHtml";
+import Component from "./component";
 
 // export async function generateStaticParams() {
 //   const Posts = await db.posts.findMany();
@@ -53,18 +54,48 @@ async function Page({ params }: { params: any }) {
     const title = item.tag?.title as string;
     tags.push(title);
   });
+  const handleClick = async () => {
+    try {
+      const fileUrl = `${imageUrl}`;
+
+      // Fetch file content from the server
+      const response = await fetch(fileUrl);
+      if (!response.ok) {
+        throw new Error("Failed to download file");
+      }
+
+      // Read file content as blob
+      const blob = await response.blob();
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob); // Use blob URL
+      link.setAttribute("download", imageUrl);
+      link.click();
+    } catch (error) {
+      console.error("Error downloading file:", error);
+    }
+  };
   return (
     <div className="min-h-screen my-16 items-start max-w-6xl px-4 mx-auto py-6">
       <BackButton />
       <div className=" grid md:grid-cols-2 gap-6 lg:gap-12 ">
         <div className="grid gap-4 md:gap-10 items-start">
-          <Image
-            alt="Images"
-            className=" object-cover border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800"
-            height={300}
-            src={process.env.NEXT_PUBLIC_URL + imageUrl}
-            width={500}
-          />
+          {data?.filetype === "Video" ? (
+            <video
+              controls
+              className=" object-cover border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800"
+              height={300}
+              src={process.env.NEXT_PUBLIC_URL + imageUrl}
+              width={500}
+            />
+          ) : (
+            <Image
+              alt="Images"
+              className=" object-cover border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800"
+              height={300}
+              src={process.env.NEXT_PUBLIC_URL + imageUrl}
+              width={500}
+            />
+          )}
         </div>
         <div className="grid gap-4 md:gap-10 items-start ">
           <div className="grid gap-2">
@@ -75,20 +106,20 @@ async function Page({ params }: { params: any }) {
 
             <div className="grid gap-4 mb-6">
               <div className=" h-auto max-w-[36rem] space-y-4">
-                <h1 className="font-semibold text-xs">Tags</h1>
-                <div className="grid grid-cols-3 sm:grid-cols-5  items-center gap-2 w-full ">
-                  {tags?.map((item, i) => (
-                    <h4 key={i} className="bg-secondary p-2 rounded-xl text-xs">
+                <div className="flex flex-wrap gap-2">
+                  {tags.map((item, i) => (
+                    <div
+                      key={i}
+                      className="bg-card inline-flex items-center gap-2 rounded-full dark:bg-muted px-3 py-1 text-sm font-medium"
+                    >
+                      <TagIcon className="w-4 h-4" />
                       {item}
-                    </h4>
+                    </div>
                   ))}
                 </div>
               </div>
             </div>
-            <Button size="lg" className="w-full">
-              <Download className="mr-4 " /> Download
-            </Button>
-            <SocialButtons />
+            <Component imageUrl={imageUrl} />
           </div>
         </div>
       </div>

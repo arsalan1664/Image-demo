@@ -189,16 +189,12 @@ export async function POST(request: NextRequest) {
   }
 
   function generateId(title: string) {
-    const formattedTitle = title.replace(/\s+/g, "-");
-    const uuid = uuidv4();
-    return `${formattedTitle}-${uuid.substring(0, 8)}`;
+    return CapitalizeWords(title).replace(/\s+/g, "-");
   }
-
-  const id = generateId(title);
 
   const category = await db.categories.create({
     data: {
-      id,
+      id: generateId(title),
       title: CapitalizeWords(title),
       metaTitle,
       description,
@@ -280,8 +276,11 @@ export async function PUT(request: NextRequest) {
         );
       }
     }
-
+    function generateId(title: string) {
+      return CapitalizeWords(title).replace(/\s+/g, "-");
+    }
     const dataToUpdate: any = {
+      id: generateId(title),
       title: CapitalizeWords(title),
       metaTitle,
       description,

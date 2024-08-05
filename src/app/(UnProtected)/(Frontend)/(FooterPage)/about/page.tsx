@@ -148,7 +148,7 @@ export default function Component() {
                     </h3>
                     <p className="text-muted-foreground">
                       We believe in empowering creators and supporting their
-                      artistic endeavors. That's why we offer a range of
+                      artistic endeavors. That is why we offer a range of
                       licensing options and provide resources to help you use
                       our images effectively.
                     </p>

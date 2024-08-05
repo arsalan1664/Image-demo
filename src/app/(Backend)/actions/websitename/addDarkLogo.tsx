@@ -12,7 +12,6 @@ export default async function AddDarkLogo(state: any, formData: FormData) {
 
     if (existingLogo) {
       await fs.unlink(existingLogo.logosrc);
-
       const dirPath = `public/uploads/logo/`;
       await fs.mkdir(dirPath, { recursive: true });
       await fs.writeFile(`${dirPath}${logo.name}`, logo.stream());

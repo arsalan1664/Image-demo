@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { revalidatePath } from "next/cache";
 
 export async function AddNavLink(state: any, formData: FormData) {
   try {
@@ -22,6 +23,7 @@ export async function AddNavLink(state: any, formData: FormData) {
     });
     const fieldValues = { title: "", description: "" };
 
+    revalidatePath("/", "layout");
     return {
       success: true,
       message: "Added Navlink successfully",

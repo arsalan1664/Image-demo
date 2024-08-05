@@ -29,10 +29,10 @@ function Images({ images, tags = [] }: { images: any; tags: any[] }) {
 
   return (
     <>
-      <div className="mx-8 mt-6 md:mt-10  bg-card pl-[-20px] sm:pl-4 md:pl-6  rounded-lg shadow-sm">
+      <div className="mx-8 mt-6 md:mt-10 py-3  bg-card dark:bg-card pl-[-20px] sm:pl-4 md:pl-6  rounded-lg shadow-sm">
         <h2 className="text-lg md:text:2xl font-bold mb-4">Filter by type</h2>
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 ">
           <ToggleGroup
             variant="outline"
             type="single"
@@ -78,7 +78,7 @@ function Images({ images, tags = [] }: { images: any; tags: any[] }) {
                 </div>
               </div>
               {item.filetype === "Video" ? (
-                <video width="320" height="240" controls preload="none">
+                <video width="320" height="240" >
                   <source
                     src={process.env.NEXT_PUBLIC_URL + item.imageUrl}
                     width={80}

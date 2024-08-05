@@ -99,7 +99,7 @@ export default function NavlinkPage() {
         </form>
         <div className="grid grid-cols-4 md:grid-cols-8 gap-2">
           {navlinks?.map((item, i) => {
-            const title = item.title.split("-")[0];
+            const title = item.title.replace(/-/g, " ");
             return (
               // <Badge key={i}>{item.title}</Badge>
               <Badge

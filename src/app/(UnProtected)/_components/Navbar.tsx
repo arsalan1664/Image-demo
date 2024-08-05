@@ -32,13 +32,13 @@ const Navbar = async () => {
       <div className="w-full h-full flex flex-row items-center justify-between m-auto px-[10px] ">
         <Link href="/" className="h-auto w-auto flex flex-row items-center">
           <NavbarImage logo={logo} darkLogo={darkLogo} />
-          <span className="font-bold ml-[10px]  hidden md:block text-foreground">
+          {/* <span className="font-bold ml-[10px]  hidden md:block text-foreground">
             {Name.success?.title}
-          </span>
+          </span> */}
         </Link>
         <div className="hidden md:flex items-center gap-5 text-muted-foreground text-sm">
           {navlinks?.map((item, i) => {
-            const title = item.title.split("-")[0];
+            const title = item.title.replace(/-/g, " ");
             return (
               <Link key={i} href={`/c/${item.title}`}>
                 {title}

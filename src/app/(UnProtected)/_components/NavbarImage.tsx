@@ -30,7 +30,11 @@ function NavbarImage({
     darkLogo.success?.logosrc.split("/")[3]) as string;
   return (
     <Image
-      src={theme == "light" ? logosrc : DarkLogosrc}
+      src={
+        theme == "light"
+          ? process.env.NEXT_PUBLIC_URL + logosrc
+          : process.env.NEXT_PUBLIC_URL + DarkLogosrc
+      }
       alt="logo"
       width={40}
       height={40}

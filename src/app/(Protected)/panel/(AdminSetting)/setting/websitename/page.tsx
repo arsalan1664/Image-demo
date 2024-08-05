@@ -117,7 +117,7 @@ export default function WebsiteName() {
           <Image
             width={50}
             height={50}
-            src={`/uploads/logo/${websiteLogo}`}
+            src={process.env.NEXT_PUBLIC_URL + `/uploads/logo/${websiteLogo}`}
             alt="logo"
           />
         </div>
@@ -138,7 +138,9 @@ export default function WebsiteName() {
           <Image
             width={50}
             height={50}
-            src={`/uploads/logo/${websiteDarkLogo}`}
+            src={
+              process.env.NEXT_PUBLIC_URL + `/uploads/logo/${websiteDarkLogo}`
+            }
             alt="logo"
           />
         </div>

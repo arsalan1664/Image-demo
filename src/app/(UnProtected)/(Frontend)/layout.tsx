@@ -16,7 +16,13 @@ async function layout({
     <>
       {res.success?.map((i: any) => {
         const code = i.script;
-        return <Script key={i.id} dangerouslySetInnerHTML={{ __html: code }} />;
+        return (
+          <Script
+            key={i.id}
+            id={i.title}
+            dangerouslySetInnerHTML={{ __html: code }}
+          />
+        );
       })}
       ;
       <Navbar />

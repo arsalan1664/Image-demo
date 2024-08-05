@@ -56,15 +56,12 @@ export async function POST(request: NextRequest) {
   }
 
   function generateId(title: string) {
-    const formattedTitle = title.replace(/\s+/g, "-");
-    const uuid = uuidv4();
-    return `${formattedTitle}-${uuid.substring(0, 8)}`;
+    return CapitalizeWords(title).replace(/\s+/g, "-");
   }
 
-  const id = generateId(title);
   const post = await db.posts.create({
     data: {
-      id,
+      id: generateId(title),
       title: CapitalizeWords(title),
       description,
       category: { connect: { id: categoryId } },
@@ -197,12 +194,16 @@ export async function PUT(request: NextRequest) {
       );
     }
   }
-
+  function generateId(title: string) {
+    return CapitalizeWords(title).replace(/\s+/g, "-");
+  }
   try {
     const existingTags = await db.postTag.findMany({
       where: { postId: existingItem.id },
     });
+
     const dataToUpdate: any = {
+      id: generateId(title),
       title: CapitalizeWords(title),
       description,
       filetype,
